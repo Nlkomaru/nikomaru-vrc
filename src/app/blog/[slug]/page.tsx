@@ -10,7 +10,7 @@ export default async function Page({
 }
 
 export function generateStaticParams() {
-    return [{ slug: "test" }, { slug: "about" }];
+    return [{ slug: "test" }];
 }
 
 export const dynamicParams = false;

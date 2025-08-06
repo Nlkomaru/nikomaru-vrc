@@ -3,9 +3,12 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev",
+        "dev": "next dev --turbo",
         "build": "next build",
         "start": "next start",
+        "pages:build": "opennextjs-cloudflare build",
+        "preview": "pnpm run pages:build && wrangler dev --port 3000",
+        "deploy": "pnpm run pages:build && wrangler deploy",
         "typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
         "check": "biome check --write ./"
     },
