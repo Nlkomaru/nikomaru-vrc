@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nikomaru-vrc VRChat関連の何かを展示するWebサイトです。
 
-## Getting Started
+## ✨ 概要
 
-First, run the development server:
+このプロジェクトは、[Next.js](https://nextjs.org) を使用して構築された、インタラクティブな3Dモデルビューワーを含むWebサイトです。  
+将来的には、ブログ機能などを通じて、VRChatに関する情報を発信していく予定です。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 主な技術スタック
+- フレームワーク: Next.js 15 (with Opennext)
+- 言語: TypeScript
+- パッケージマネージャー: pnpm
+- UIライブラリ: Shadcn UI
+- 3Dレンダリング: Three.js
+- CSSライブラリ: Tailwind CSS
+- デプロイ: Cloudflare Workers
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## License
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Written in 2025 by Nikomaru. No Rights Reserved.
 
-## Learn More
+To the extent possible under law, Nikomaru has waived all copyright and related or neighboring rights to Chocolor. This work is published from: Japan.<br />
+You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see [About CC0](http://creativecommons.org/publicdomain/zero/1.0/).
 
-To learn more about Next.js, take a look at the following resources:
+## Special Thanks
+Using test model from [KhronosGroup/glTF-Sample-Models](https://github.com/KhronosGroup/glTF-Sample-Models) repository.
+- [WaterBottle](https://github.com/KhronosGroup/glTF-Sample-Models/tree/main/2.0/WaterBottle)
+- [ToyCar](https://github.com/KhronosGroup/glTF-Sample-Models/tree/main/2.0/ToyCar)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built with ❤️ using Next.js and Three.js.
