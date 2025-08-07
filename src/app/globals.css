@@ -42,7 +42,6 @@
     --radius-xl: calc(var(--radius) + 4px);
 
     --font-sans: "Poppins", "Zen Kaku Gothic New", sans-serif;
-
 }
 
 :root {
