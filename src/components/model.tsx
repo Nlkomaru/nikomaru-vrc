@@ -14,7 +14,7 @@ export const Model = ({
 }) => {
     const modelPath = `/model/${modelName}`;
 
-    const { scene, _materials, _nodes } = useLoader(GLTFLoader, modelPath);
+    const { scene } = useLoader(GLTFLoader, modelPath);
 
     return (
         <div className="w-[400px] h-[500px] mx-auto bg-muted my-4 p-8 rounded-md shadow-lg">
