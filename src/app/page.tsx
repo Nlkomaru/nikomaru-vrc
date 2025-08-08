@@ -56,7 +56,7 @@ const BgImage = () => {
             src="/bg-image.png"
             alt="Background Image"
             fill
-            className="-z-50 object-cover"
+            className="-z-50 object-cover select-none"
         />
     );
 };
