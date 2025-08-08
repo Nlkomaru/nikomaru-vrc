@@ -10,7 +10,7 @@ export default function Home() {
     );
 }
 
-const FirstLatter = ({ input }: { input: string }) => {
+const FirstLetter = ({ input }: { input: string }) => {
     const upperLetter = input.toUpperCase();
     return (
         <div className="text-white font-['Montserrat'] text-4xl first-letter:text-5xl">
