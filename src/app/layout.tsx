@@ -1,7 +1,13 @@
 import type React from "react";
 import "./globals.css";
 
-import { JetBrains_Mono, Poppins, Zen_Kaku_Gothic_New } from "next/font/google";
+import {
+    JetBrains_Mono,
+    Montserrat,
+    Montserrat_Alternates,
+    Poppins,
+    Zen_Kaku_Gothic_New,
+} from "next/font/google";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { cn } from "@/lib/utils";
 
@@ -23,12 +29,26 @@ const jetbrainsMono = JetBrains_Mono({
     weight: ["400", "500", "600", "700"],
 });
 
+const montserrat = Montserrat({
+    subsets: ["latin"],
+    variable: "--font-montserrat",
+    weight: ["400", "500", "600", "700"],
+});
+
+const montserratAlternates = Montserrat_Alternates({
+    subsets: ["latin"],
+    variable: "--font-montserrat-alternates",
+    weight: ["400", "500", "600", "700"],
+});
+
 export const metadata = {
-    description: "A collection of VRChat activities and experiences by Nikomaru",
+    description:
+        "A collection of VRChat activities and experiences by Nikomaru",
     title: "Nikomaru - VRChat Activities and Experiences",
     openGraph: {
         title: "Nikomaru - VRChat Activities and Experiences",
-        description: "A collection of VRChat activities and experiences by Nikomaru",
+        description:
+            "A collection of VRChat activities and experiences by Nikomaru",
         url: "https://vrc.nikomaru.com",
         siteName: "Nikomaru - VRChat Activities and Experiences",
         images: [
@@ -54,12 +74,14 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
                     "min-h-screen bg-background antialiased font-sans",
                     poppins.variable,
                     zenKakuGothicNew.variable,
-                    jetbrainsMono,
+                    jetbrainsMono.variable,
+                    montserrat.variable,
+                    montserratAlternates.variable,
                 )}
             >
                 <ThemeProvider
                     attribute="class"
-                    defaultTheme="dark"
+                    defaultTheme="light"
                     enableSystem={false}
                     disableTransitionOnChange
                 >

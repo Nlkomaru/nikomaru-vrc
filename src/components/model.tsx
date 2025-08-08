@@ -30,7 +30,7 @@ export const Model = ({
                     >
                         <primitive object={scene} />
                     </Stage>
-                    <OrbitControls makeDefault autoRotate />
+                    <OrbitControls autoRotate />
                 </Suspense>
             </Canvas>
         </div>
