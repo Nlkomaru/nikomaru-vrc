@@ -6,7 +6,6 @@
 @theme inline {
     --color-background: var(--background);
     --color-foreground: var(--foreground);
-    --font-mono: var(--font-geist-mono);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -42,7 +41,7 @@
     --radius-xl: calc(var(--radius) + 4px);
 
     --font-sans: "Poppins", "Zen Kaku Gothic New", sans-serif;
-
+    --font-mono: "JetBrains Mono", "Fira Code", "Courier New", monospace;
 }
 
 :root {
@@ -82,7 +81,7 @@
 
 .dark {
     --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
+    --foreground: oklch(0.93 0 0);
     --card: oklch(0.205 0 0);
     --card-foreground: oklch(0.985 0 0);
     --popover: oklch(0.205 0 0);

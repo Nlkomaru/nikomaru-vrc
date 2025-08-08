@@ -12,9 +12,6 @@ permissions:
 
 jobs:
   deploy:
-    env:
-      CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
-      CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
     runs-on: ubuntu-latest
     strategy:
       matrix:

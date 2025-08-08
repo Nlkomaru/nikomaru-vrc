@@ -1,8 +1,8 @@
 import type React from "react";
 import "./globals.css";
 
-import { Poppins, Zen_Kaku_Gothic_New } from "next/font/google";
-
+import { JetBrains_Mono, Poppins, Zen_Kaku_Gothic_New } from "next/font/google";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 import { cn } from "@/lib/utils";
 
 const zenKakuGothicNew = Zen_Kaku_Gothic_New({
@@ -14,27 +14,57 @@ const zenKakuGothicNew = Zen_Kaku_Gothic_New({
 const poppins = Poppins({
     subsets: ["latin"],
     variable: "--font-poppins",
-    weight: ["400", "700"],
+    weight: ["400", "500"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+    subsets: ["latin"],
+    variable: "--font-jetbrains-mono",
+    weight: ["400", "500", "600", "700"],
 });
 
 export const metadata = {
-    description: "A blank template using Payload in a Next.js app.",
-    title: "Payload Blank Template",
+    description: "A collection of VRChat activities and experiences by Nikomaru",
+    title: "Nikomaru - VRChat Activities and Experiences",
+    openGraph: {
+        title: "Nikomaru - VRChat Activities and Experiences",
+        description: "A collection of VRChat activities and experiences by Nikomaru",
+        url: "https://vrc.nikomaru.com",
+        siteName: "Nikomaru - VRChat Activities and Experiences",
+        images: [
+            {
+                url: "https://scorpioides.nikomaru.dev/0197c5ed-de70-74fb-ad2c-7a6bb2c2240f.png",
+                width: 1920,
+                height: 1080,
+                alt: "Nikomaru - VRChat Activities and Experiences",
+            },
+        ],
+        locale: "ja_JP",
+        type: "website",
+    },
 };
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
     const { children } = props;
 
     return (
-        <html lang="en">
+        <html lang="ja" suppressHydrationWarning>
             <body
                 className={cn(
                     "min-h-screen bg-background antialiased font-sans",
                     poppins.variable,
                     zenKakuGothicNew.variable,
+                    jetbrainsMono,
                 )}
             >
-                <main>{children}</main>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="dark"
+                    enableSystem={false}
+                    disableTransitionOnChange
+                >
+                    {children}
+                </ThemeProvider>
             </body>
         </html>
     );
