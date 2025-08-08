@@ -24,8 +24,24 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-    description: "A blank template using Payload in a Next.js app.",
-    title: "Payload Blank Template",
+    description: "A collection of VRChat activities and experiences by Nikomaru",
+    title: "Nikomaru - VRChat Activities and Experiences",
+    openGraph: {
+        title: "Nikomaru - VRChat Activities and Experiences",
+        description: "A collection of VRChat activities and experiences by Nikomaru",
+        url: "https://vrc.nikomaru.com",
+        siteName: "Nikomaru - VRChat Activities and Experiences",
+        images: [
+            {
+                url: "https://scorpioides.nikomaru.dev/0197c5ed-de70-74fb-ad2c-7a6bb2c2240f.png",
+                width: 1920,
+                height: 1080,
+                alt: "Nikomaru - VRChat Activities and Experiences",
+            },
+        ],
+        locale: "ja_JP",
+        type: "website",
+    },
 };
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
