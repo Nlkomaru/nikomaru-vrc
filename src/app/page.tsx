@@ -23,10 +23,10 @@ const Title = () => {
     return (
         <div className="flex flex-col gap-2 mt-8 text-2xl text-white font-['Montserrat']">
             <div className="flex gap-6">
-                <FirstLatter input="Nikomaru" />
-                <FirstLatter input="VRChat" />
+                <FirstLetter input="Nikomaru" />
+                <FirstLetter input="VRChat" />
             </div>
-            <FirstLatter input="FootPrints" />
+            <FirstLetter input="FootPrints" />
         </div>
     );
 };
