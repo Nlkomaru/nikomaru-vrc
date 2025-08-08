@@ -48,13 +48,12 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_KEY }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          command: versions upload --message "Deployed pages by GitHub Actions branch ${{ github.ref_name }}" --preview-alias "${{ github.head_ref }}"
+          command: versions upload --message "Deployed pages by GitHub Actions branch ${{ github.ref_name }}"
           
       - name: Create comment file
         id: create-comment-file
         env:
           DEPLOYMENT_URL: ${{ steps.deploy-pages-preview.outputs.deployment-url }}
-          DEPLOYMENT_BRANCH_URL : ${{ steps.deploy-pages-preview.outputs.deployment-alias-url }}
         run: |
           cat  << EOF > comment.md
           ## 🚀 Deploying ${{ github.event.repository.name }} with Cloudflare Workers
@@ -62,10 +61,6 @@ jobs:
             <tr>
               <th scope="row">Preview URL</th>
               <td><a href="$DEPLOYMENT_URL">$DEPLOYMENT_URL</a></td>
-            </tr>
-            <tr>
-              <th scope="row">Branch Preview URL</th>
-              <td><a href="$DEPLOYMENT_BRANCH_URL">$DEPLOYMENT_BRANCH_URL</a></td>
             </tr>
           </table>
           EOF
