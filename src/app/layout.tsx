@@ -24,11 +24,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-    description: "A collection of VRChat activities and experiences by Nikomaru",
+    description:
+        "A collection of VRChat activities and experiences by Nikomaru",
     title: "Nikomaru - VRChat Activities and Experiences",
     openGraph: {
         title: "Nikomaru - VRChat Activities and Experiences",
-        description: "A collection of VRChat activities and experiences by Nikomaru",
+        description:
+            "A collection of VRChat activities and experiences by Nikomaru",
         url: "https://vrc.nikomaru.com",
         siteName: "Nikomaru - VRChat Activities and Experiences",
         images: [
