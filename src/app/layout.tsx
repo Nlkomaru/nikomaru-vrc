@@ -20,7 +20,7 @@ const zenKakuGothicNew = Zen_Kaku_Gothic_New({
 const poppins = Poppins({
     subsets: ["latin"],
     variable: "--font-poppins",
-    weight: ["400", "500"],
+    weight: ["200", "300", "400", "500", "600", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({

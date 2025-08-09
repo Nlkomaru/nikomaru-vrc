@@ -1,10 +1,17 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import postsData from "^/blog/content.json";
+import { PostCard } from "./_component/post-card";
+import type { PostMeta } from "./_component/types";
 
-export default function Home() {
+export default function BlogIndexPage() {
+    const posts = postsData as PostMeta[];
+
     return (
-        <Link href="/blog/test">
-            <Button>Test Link</Button>
-        </Link>
+        <div className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {posts.map((post) => (
+                    <PostCard key={post.slug} post={post} />
+                ))}
+            </div>
+        </div>
     );
 }

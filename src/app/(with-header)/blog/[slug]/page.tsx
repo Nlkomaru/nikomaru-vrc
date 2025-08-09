@@ -11,10 +11,15 @@ export default async function Page({
     }
 
     return (
-        <div className="w-[800px] mx-auto px-4 py-8">
+        <div className="max-w-[800px] mx-auto px-4 py-8">
             <Post />
         </div>
     );
 }
 
 export const dynamicParams = false;
+
+export async function generateStaticParams() {
+    const { default: posts } = await import("^/blog/content.json");
+    return (posts as Array<{ slug: string }>).map((p) => ({ slug: p.slug }));
+}
