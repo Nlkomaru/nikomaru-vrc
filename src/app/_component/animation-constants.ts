@@ -17,5 +17,3 @@ export const HOVER_DIM_OPACITY = 0.45;
 
 // Duration for dimming transition (seconds)
 export const HOVER_DIM_DURATION_SEC = 0.18;
-
-

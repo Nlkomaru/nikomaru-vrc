@@ -31,5 +31,3 @@ export const Title = () => {
         </motion.div>
     );
 };
-
-

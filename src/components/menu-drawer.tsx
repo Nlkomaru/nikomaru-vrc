@@ -1,34 +1,31 @@
-import { MenuIcon } from "lucide-react";
+import { Menu, XIcon } from "lucide-react";
+import type React from "react";
 import {
-    Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
-    DrawerTrigger,
-} from "@/components/ui/drawer";
-import { Button } from "./ui/button";
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogFooter,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
-export const MenuDrawer = () => (
-    <>
-        <Drawer>
-            <DrawerTrigger>
-                <MenuIcon className="size-10" />
-            </DrawerTrigger>
-            <DrawerContent className="h-[100lvh]">
-                <DrawerHeader>
-                    <DrawerTitle>Menu</DrawerTitle>
-                    <DrawerDescription>
-                        This is menu.
-                    </DrawerDescription>
-                </DrawerHeader>
-                
-                <DrawerFooter>
-                    
-                </DrawerFooter>
-            </DrawerContent>
-        </Drawer>
-    </>
-);
+export function MenuDrawer({ className }: React.ComponentProps<"div">) {
+    return (
+        <Dialog>
+            <form>
+                <DialogTrigger>
+                    <Menu className={className} />
+                </DialogTrigger>
+                <DialogContent
+                    className="w-[100lvw] h-[100lvh] rounded-none"
+                    showCloseButton={false}
+                >
+                    <div className="grid gap-4">aaa</div>
+                    <DialogFooter>sns</DialogFooter>
+                    <DialogClose>
+                        <XIcon className={className} />
+                    </DialogClose>
+                </DialogContent>
+            </form>
+        </Dialog>
+    );
+}

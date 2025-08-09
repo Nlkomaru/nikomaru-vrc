@@ -13,14 +13,13 @@ export const Header = () => (
 
 const DesktopHeader = () => (
     <header>
-        This is desktop header
-        <MenuDrawer />
+
     </header>
 );
 
 const MobileHeader = () => (
     <header>
         This is mobile header
-        <MenuDrawer />
+        <MenuDrawer className="absolute top-6 right-6 size-8" />
     </header>
 );

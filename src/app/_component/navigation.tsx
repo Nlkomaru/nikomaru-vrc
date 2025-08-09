@@ -25,13 +25,13 @@ export const Navigation = () => {
         const timeouts = links.map((_, index) =>
             setTimeout(
                 () => setVisibleCount((prev) => Math.max(prev, index + 1)),
-                index * intervalMs
-            )
+                index * intervalMs,
+            ),
         );
         return () => {
             timeouts.forEach((id) => clearTimeout(id));
         };
-    }, []);
+    }, [links.map]);
 
     const visibleLinks = links.slice(0, visibleCount);
 
@@ -47,7 +47,8 @@ export const Navigation = () => {
                                   opacity: 1,
                                   y: 0,
                                   transition: {
-                                      duration: ANIMATION_TIMING.navItemDurationSec,
+                                      duration:
+                                          ANIMATION_TIMING.navItemDurationSec,
                                       ease: "easeOut",
                                   },
                               }
@@ -72,5 +73,3 @@ export const Navigation = () => {
         </div>
     );
 };
-
-

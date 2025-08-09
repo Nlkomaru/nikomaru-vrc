@@ -39,7 +39,13 @@ async function readPostMeta(postDir: string): Promise<PostMeta | null> {
 
 async function main() {
     const contentRoot = path.join(process.cwd(), "src", "content");
-    const outDir = path.join(process.cwd(), "public", "blog");
+    const outDir = path.join(
+        process.cwd(),
+        "src",
+        "app",
+        "(with-header)",
+        "blog",
+    );
     const outFile = path.join(outDir, "content.json");
 
     const entries = await fs

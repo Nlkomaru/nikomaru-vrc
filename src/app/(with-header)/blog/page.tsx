@@ -1,6 +1,6 @@
-import postsData from "^/blog/content.json";
 import { PostCard } from "./_component/post-card";
 import type { PostMeta } from "./_component/types";
+import postsData from "./content.json";
 
 export default function BlogIndexPage() {
     const posts = postsData as PostMeta[];

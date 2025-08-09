@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Title } from "./title";
-import { Navigation } from "./navigation";
 import { ANIMATION_TIMING } from "./animation-constants";
+import { Navigation } from "./navigation";
+import { Title } from "./title";
 
 export const Header = () => {
     const [showNav, setShowNav] = useState(false);
 
     useEffect(() => {
         const totalDelayMs =
-            (ANIMATION_TIMING.titleDurationSec + ANIMATION_TIMING.navAfterTitleGapSec) *
+            (ANIMATION_TIMING.titleDurationSec +
+                ANIMATION_TIMING.navAfterTitleGapSec) *
             1000;
         const id = setTimeout(() => setShowNav(true), totalDelayMs);
         return () => clearTimeout(id);
@@ -23,5 +24,3 @@ export const Header = () => {
         </div>
     );
 };
-
-

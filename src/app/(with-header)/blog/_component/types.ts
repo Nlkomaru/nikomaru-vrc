@@ -9,6 +9,3 @@ export type PostMeta = {
     image?: string;
     [key: string]: unknown;
 };
-
-
-

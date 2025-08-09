@@ -20,6 +20,6 @@ export default async function Page({
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-    const { default: posts } = await import("^/blog/content.json");
+    const { default: posts } = await import("../content.json");
     return (posts as Array<{ slug: string }>).map((p) => ({ slug: p.slug }));
 }
