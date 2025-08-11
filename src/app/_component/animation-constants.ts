@@ -7,7 +7,7 @@ export const ANIMATION_TIMING = {
     // Gap after title before navigation starts to appear (seconds)
     navAfterTitleGapSec: 0.15,
     // Interval to reveal each nav item sequentially (seconds)
-    navStaggerSec: 0.7,
+    navStaggerSec: 0.6,
     // Each navigation item's own animation duration (seconds)
     navItemDurationSec: 0.6,
 };

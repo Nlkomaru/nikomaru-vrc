@@ -37,15 +37,6 @@ export function PostCard({ post }: Props) {
                             {post.summary ?? post.description}
                         </p>
                     ) : null}
-                    {Array.isArray(post.tags) && post.tags.length > 0 ? (
-                        <div className="flex flex-wrap gap-2 mt-3">
-                            {post.tags.map((t) => (
-                                <span key={t} className="text-xs">
-                                    {t}
-                                </span>
-                            ))}
-                        </div>
-                    ) : null}
                 </div>
             </article>
         </Link>

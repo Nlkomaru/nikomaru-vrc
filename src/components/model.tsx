@@ -1,9 +1,9 @@
 "use client";
+
 import { OrbitControls, Stage } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { Suspense } from "react";
 import { GLTFLoader } from "three-stdlib";
-import { H3 } from "@/components/ui/typography";
 
 export const Model = ({
     modelName,
@@ -14,25 +14,41 @@ export const Model = ({
 }) => {
     const modelPath = `/model/${modelName}`;
 
-    const { scene } = useLoader(GLTFLoader, modelPath);
+    // Avoid running useLoader on the server by delegating to a client-only child
+    // Server will render nothing to prevent Invalid URL from node's URL parser
+    const isServer = typeof window === "undefined";
 
     return (
-        <div className="w-[400px] h-[500px] mx-auto bg-muted my-4 p-8 rounded-md shadow-lg">
-            <H3>{title}</H3>
-            <Canvas>
-                <Suspense fallback={null}>
-                    <Stage
-                        preset="rembrandt"
-                        intensity={1}
-                        shadows="contact"
-                        adjustCamera
-                        environment="city"
-                    >
-                        <primitive object={scene} />
-                    </Stage>
-                    <OrbitControls autoRotate />
-                </Suspense>
-            </Canvas>
+        <div className="w-[400px] h-[500px] mx-auto my-4 p-8 border border-border rounded-md">
+            <div className="pb-4 font-bold text-xl">{title}</div>
+            {!isServer ? (
+                <Canvas>
+                    <Suspense fallback={null}>
+                        <ModelInner modelPath={modelPath} />
+                        <OrbitControls autoRotate autoRotateSpeed={0.7} />
+                    </Suspense>
+                </Canvas>
+            ) : null}
         </div>
     );
 };
+
+function ModelInner({ modelPath }: { modelPath: string }) {
+    // Build an absolute URL on the client to satisfy loaders that expect it
+    const absoluteUrl =
+        typeof window !== "undefined"
+            ? `${window.location.origin}${modelPath}`
+            : modelPath;
+    const { scene } = useLoader(GLTFLoader, absoluteUrl);
+    return (
+        <Stage
+            adjustCamera
+            environment="city"
+            shadows={{ type: "contact", opacity: 0.2, blur: 3 }}
+            intensity={0.6}
+            preset="portrait"
+        >
+            <primitive object={scene} />
+        </Stage>
+    );
+}

@@ -1,10 +1,6 @@
 import Image from "next/image";
 
-type BgImageProps = {
-    onLoaded?: () => void;
-};
-
-export const BgImage = ({ onLoaded }: BgImageProps) => {
+export const Scene = () => {
     return (
         <Image
             src="/bg-image-1.png"
@@ -15,9 +11,6 @@ export const BgImage = ({ onLoaded }: BgImageProps) => {
             height={1080}
             className="-z-50 object-cover select-none h-[100lvh] brightness-80 saturate-80 pointer-events-none object-[45%_43%] md:object-top"
             priority
-            onLoad={() => {
-                onLoaded?.();
-            }}
         />
     );
 };

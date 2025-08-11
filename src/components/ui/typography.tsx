@@ -20,26 +20,38 @@ const createComponent = <T extends HTMLElement>(
 
 export const H1 = createComponent<HTMLHeadingElement>(
     "h1",
-    "scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl",
+    "scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl pb-4",
     "H1",
 );
 
 export const H2 = createComponent<HTMLHeadingElement>(
     "h2",
-    "scroll-m-20 border-b py-2 text-3xl font-semibold tracking-tight first:mt-0",
+    "scroll-m-20 border-b py-2 text-3xl font-semibold tracking-tight first:mt-0 pb-2 pt-8",
     "H2",
 );
 
 export const H3 = createComponent<HTMLHeadingElement>(
     "h3",
-    "scroll-m-20 text-2xl font-semibold tracking-tight",
+    "scroll-m-20 text-2xl font-semibold tracking-tight pb-2 pt-4",
     "H3",
 );
 
 export const H4 = createComponent<HTMLHeadingElement>(
     "h4",
-    "scroll-m-20 text-xl font-semibold tracking-tight",
+    "scroll-m-20 text-xl font-semibold tracking-tight pb-2 pt-4",
     "H4",
+);
+
+export const H5 = createComponent<HTMLHeadingElement>(
+    "h5",
+    "scroll-m-20 text-lg font-semibold tracking-tight pb-2 pt-4",
+    "H5",
+);
+
+export const H6 = createComponent<HTMLHeadingElement>(
+    "h6",
+    "scroll-m-20 text-base font-semibold tracking-tight pb-2 pt-4",
+    "H6",
 );
 
 export const Lead = createComponent<HTMLParagraphElement>(

@@ -2,6 +2,7 @@ import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
+import remarkToc from "remark-toc";
 
 const nextConfig: NextConfig = {
     /* config options here */
@@ -12,7 +13,7 @@ const withMDX = createMDX({
     // Use classic MDX pipeline with remark plugins
     extension: /\.(md|mdx)$/,
     options: {
-        remarkPlugins: [remarkGfm, remarkFrontmatter],
+        remarkPlugins: [remarkGfm, remarkFrontmatter, remarkToc],
     },
 });
 
