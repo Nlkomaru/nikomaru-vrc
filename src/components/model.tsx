@@ -2,7 +2,7 @@
 
 import { OrbitControls, Stage } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { GLTFLoader } from "three-stdlib";
 
 export const Model = ({
@@ -16,12 +16,15 @@ export const Model = ({
 
     // Avoid running useLoader on the server by delegating to a client-only child
     // Server will render nothing to prevent Invalid URL from node's URL parser
-    const isServer = typeof window === "undefined";
+    const [isMounted, setIsMounted] = useState(false);
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     return (
         <div className="w-[600px] h-[400px] mx-auto my-4 p-8 bg-gradient-to-br from-slate-100 to-sky-50 rounded-lg overflow-hidden shadow-inner">
             <div className="pb-4 font-bold text-xl">{title}</div>
-            {!isServer ? (
+            {isMounted ? (
                 <Canvas>
                     <Suspense fallback={null}>
                         <ModelInner modelPath={modelPath} />

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { TOC } from "../_component/toc";
 
 export async function generateMetadata({
     params,
@@ -57,13 +58,28 @@ export default async function Page({
     }
 
     return (
-        <div className="max-w-[800px] mx-auto px-4 py-8 font-regular">
-            <Post />
+        <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                {/* メインコンテンツエリア */}
+                <div className="lg:col-span-3">
+                    <div className="prose prose-lg max-w-none font-regular">
+                        <Post />
+                    </div>
+                </div>
+
+                {/* サイドバー（TOC） */}
+                <div className="hidden lg:block lg:col-span-1">
+                    <div className="sticky top-8">
+                        <TOC />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
 
-export const dynamicParams = false;
+export const dynamic = "auto";
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
     const { default: posts } = await import("../content.json");
