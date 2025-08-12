@@ -40,8 +40,9 @@
     --radius-lg: var(--radius);
     --radius-xl: calc(var(--radius) + 4px);
 
-    --font-sans: "Poppins", "Zen Kaku Gothic New", sans-serif;
-    --font-mono: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+    --font-sans: var(--font-poppins), var(--font-noto-sans-jp), sans-serif;
+    --font-mono:
+        var(--font-jetbrains-mono), "Fira Code", "Courier New", monospace;
 }
 
 :root {

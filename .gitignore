@@ -37,3 +37,5 @@ next-env.d.ts
 
 # OpenNext
 /.open-next
+
+src/app/(with-header)/blog/content.json

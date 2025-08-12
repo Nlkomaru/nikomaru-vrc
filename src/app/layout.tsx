@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import type React from "react";
 import "./globals.css";
 
@@ -5,22 +6,21 @@ import {
     JetBrains_Mono,
     Montserrat,
     Montserrat_Alternates,
+    Noto_Sans_JP,
     Poppins,
-    Zen_Kaku_Gothic_New,
 } from "next/font/google";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { cn } from "@/lib/utils";
 
-const zenKakuGothicNew = Zen_Kaku_Gothic_New({
+const notoSansJP = Noto_Sans_JP({
     subsets: ["latin"],
-    variable: "--font-zen-kaku-gothic-new",
-    weight: ["500", "700"],
+    variable: "--font-noto-sans-jp",
 });
 
 const poppins = Poppins({
     subsets: ["latin"],
     variable: "--font-poppins",
-    weight: ["400", "500"],
+    weight: ["200", "300", "400", "500", "600", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -41,7 +41,8 @@ const montserratAlternates = Montserrat_Alternates({
     weight: ["400", "500", "600", "700"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
+    metadataBase: new URL("https://vrc.nikomaru.com"),
     description:
         "A collection of VRChat activities and experiences by Nikomaru",
     title: "Nikomaru - VRChat Activities and Experiences",
@@ -73,7 +74,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
                 className={cn(
                     "min-h-screen bg-background antialiased font-sans",
                     poppins.variable,
-                    zenKakuGothicNew.variable,
+                    notoSansJP.variable,
                     jetbrainsMono.variable,
                     montserrat.variable,
                     montserratAlternates.variable,
