@@ -34,7 +34,7 @@ const navLinks = ["photography", "blog", "about"];
 const Navbar = () => {
     return (
         <nav>
-            <ul className="flex gap-16 text-xl">
+            <ul className="flex gap-16 text-xl text-gray-800">
                 {navLinks.map((link) => (
                     <li key={link}>
                         <Link href={`/${link}`}>
@@ -57,6 +57,6 @@ const MobileHeader = () => (
                 alt={"Nikomaru vrchat logo"}
             />
         </Link>
-        <MenuDrawer className="absolute top-6 right-6 size-8" />
+        <MenuDrawer className="absolute top-6 right-6" />
     </header>
 );

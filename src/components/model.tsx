@@ -19,7 +19,7 @@ export const Model = ({
     const isServer = typeof window === "undefined";
 
     return (
-        <div className="w-[400px] h-[500px] mx-auto my-4 p-8 border border-border rounded-md">
+        <div className="w-[600px] h-[400px] mx-auto my-4 p-8 bg-gradient-to-br from-slate-100 to-sky-50 rounded-lg overflow-hidden shadow-inner">
             <div className="pb-4 font-bold text-xl">{title}</div>
             {!isServer ? (
                 <Canvas>

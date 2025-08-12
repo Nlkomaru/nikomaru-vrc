@@ -53,8 +53,8 @@ async function main() {
         .catch(() => []);
     const dirs = entries
         .filter((e) => e.isDirectory())
-        .map((e) => path.join(contentRoot, e.name));
-    // .filter((dir) => !dir.split(path.sep).pop()?.startsWith("_"));
+        .map((e) => path.join(contentRoot, e.name))
+        .filter((dir) => !dir.split(path.sep).pop()?.startsWith("_"));
 
     const posts = (
         await Promise.all(dirs.map((dir) => readPostMeta(dir)))
