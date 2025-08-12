@@ -20,13 +20,13 @@ const createComponent = <T extends HTMLElement>(
 
 export const H1 = createComponent<HTMLHeadingElement>(
     "h1",
-    "scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl pb-2",
+    "scroll-m-20 border-b text-3xl font-extrabold tracking-tight lg:text-3xl pb-2",
     "H1",
 );
 
 export const H2 = createComponent<HTMLHeadingElement>(
     "h2",
-    "scroll-m-20 border-b py-2 text-2xl font-semibold tracking-tight first:mt-0 pb-2 pt-8",
+    "scroll-m-20 border-b py-2 mb-4 text-2xl font-semibold tracking-tight first:mt-0 pb-2 pt-8",
     "H2",
 );
 

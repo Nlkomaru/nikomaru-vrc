@@ -11,6 +11,7 @@
         "deploy": "pnpm run pages:build && wrangler deploy",
         "gen:types": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
         "gen:content": "pnpx tsx scripts/generate-content-json.ts",
+        "gen:bibtex": "pnpx tsx scripts/generate-bibtex-types.ts",
         "check": "biome check --write ./"
     },
     "dependencies": {

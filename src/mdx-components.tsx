@@ -22,6 +22,7 @@ const components: MDXComponents = {
     h4: ({ children }) => <H4>{children}</H4>,
     h5: ({ children }) => <H5>{children}</H5>,
     h6: ({ children }) => <H6>{children}</H6>,
+    p: ({ children }) => <p className="text-md leading-relaxed pb-2">{children}</p>,
     blockquote: ({ children }) => <Quote>{children}</Quote>,
     ul: ({ children }) => <UnOrderedList>{children}</UnOrderedList>,
     ol: ({ children }) => <OrderedList>{children}</OrderedList>,

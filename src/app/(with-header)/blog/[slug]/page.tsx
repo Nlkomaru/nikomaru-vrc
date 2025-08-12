@@ -18,7 +18,7 @@ export async function generateMetadata({
         }>
     ).find((p) => p.slug === slug);
 
-    const title = post?.title ?? slug;
+    const title = (post?.title ?? slug) + " - Nikomaru VRChat Activities";
     const description = post?.description;
     const image =
         post?.image ??
