@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ScrollToTop } from "../_component/scroll-to-top";
 import { TOC } from "../_component/toc";
 
 export async function generateMetadata({
@@ -38,7 +39,7 @@ export async function generateMetadata({
         twitter: image
             ? {
                   card: "summary_large_image",
-                  site: "https://vrc.nikomaru.dev/blog",
+                  site: "https://vrc.nikomaru.dev",
                   title,
                   description,
                   images: [image],
@@ -60,7 +61,11 @@ export default async function Page({
     }
 
     return (
-        <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto py-4">
+            <div className="lg:hidden mb-6">
+                <TOC />
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 {/* メインコンテンツエリア */}
                 <div className="lg:col-span-3">
@@ -69,13 +74,16 @@ export default async function Page({
                     </div>
                 </div>
 
-                {/* サイドバー（TOC） */}
+                {/* デスクトップ用サイドバー（TOC） */}
                 <div className="hidden lg:block lg:col-span-1">
                     <div className="sticky top-8">
                         <TOC />
                     </div>
                 </div>
             </div>
+
+            {/* 常に右下に表示される「一番上に戻る」ボタン */}
+            <ScrollToTop />
         </div>
     );
 }
