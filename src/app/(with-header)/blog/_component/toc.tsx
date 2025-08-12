@@ -98,8 +98,9 @@ export function TOC({ className }: TOCProps) {
         }
 
         // URLを更新してリンクとして機能させる
-        const url = `${window.location.origin}${window.location.pathname}#${id}`;
-        window.history.pushState({}, "", url);
+        const url = new URL(window.location.href);
+        url.hash = id;
+        window.history.pushState({}, "", url.toString());
         setActiveId(id);
     };
 
