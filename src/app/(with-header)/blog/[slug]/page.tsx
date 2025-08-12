@@ -19,7 +19,9 @@ export async function generateMetadata({
 
     const title = post?.title ?? slug;
     const description = post?.description;
-    const image = post?.image;
+    const image =
+        post?.image ??
+        "https://scorpioides.nikomaru.dev/0197c5ed-de70-74fb-ad2c-7a6bb2c2240f.png";
 
     return {
         title,
@@ -28,15 +30,15 @@ export async function generateMetadata({
             ? {
                   title: `${title} - Nikomaru VRChat Activities`,
                   description,
-                  images: [image],
+                  images: [`https://vrc.nikomaru.dev${image}`],
                   siteName: "Nikomaru - VRChat Activities and Experiences",
-                  url: `https://vrc.nikomaru.com/blog/${slug}`,
+                  url: `https://vrc.nikomaru.dev/blog/${slug}`,
               }
             : undefined,
         twitter: image
             ? {
                   card: "summary_large_image",
-                  site: "https://vrc.nikomaru.com/blog",
+                  site: "https://vrc.nikomaru.dev/blog",
                   title,
                   description,
                   images: [image],
