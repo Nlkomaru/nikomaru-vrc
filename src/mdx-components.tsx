@@ -2,6 +2,16 @@
 import type { MDXComponents } from "mdx/types";
 import { headers } from "next/headers";
 import {
+    Admonition,
+    Danger,
+    Info,
+    Note,
+    Success,
+    Tip,
+    Warning,
+} from "@/components/admonition";
+import type { AdmonitionProps } from "@/components/admonition";
+import {
     H1,
     H2,
     H3,
@@ -22,12 +32,27 @@ const components: MDXComponents = {
     h4: ({ children }) => <H4>{children}</H4>,
     h5: ({ children }) => <H5>{children}</H5>,
     h6: ({ children }) => <H6>{children}</H6>,
-    p: ({ children }) => <p className="text-md leading-relaxed pb-2">{children}</p>,
+    p: ({ children }) => (
+        <p className="text-md leading-relaxed pb-2">{children}</p>
+    ),
+    a: ({ children, href }) => (
+        <a href={href} className="text-blue-500 underline hover:text-blue-600">
+            {children}
+        </a>
+    ),
     blockquote: ({ children }) => <Quote>{children}</Quote>,
     ul: ({ children }) => <UnOrderedList>{children}</UnOrderedList>,
     ol: ({ children }) => <OrderedList>{children}</OrderedList>,
     code: ({ children }) => <InlineCode>{children}</InlineCode>,
     pre: ({ children }) => <MultilineCode>{children}</MultilineCode>,
+    // Admonitions
+    Admonition: (props: AdmonitionProps) => <Admonition {...props} />,
+    Note: (props: Omit<AdmonitionProps, "type">) => <Note {...props} />,
+    Tip: (props: Omit<AdmonitionProps, "type">) => <Tip {...props} />,
+    Info: (props: Omit<AdmonitionProps, "type">) => <Info {...props} />,
+    Warning: (props: Omit<AdmonitionProps, "type">) => <Warning {...props} />,
+    Danger: (props: Omit<AdmonitionProps, "type">) => <Danger {...props} />,
+    Success: (props: Omit<AdmonitionProps, "type">) => <Success {...props} />,
     img: async (props) => {
         const { src, alt, width, height } = props as {
             src: string;

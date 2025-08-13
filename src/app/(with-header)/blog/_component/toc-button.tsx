@@ -18,8 +18,9 @@ export function TOCButton({ heading, isActive, onClick }: TOCButtonProps) {
             variant="ghost"
             size="sm"
             onClick={() => onClick(heading.id)}
+            title={heading.text}
             className={cn(
-                "w-full justify-start h-auto py-1 px-2",
+                "w-full justify-start h-auto py-1 px-2 overflow-hidden text-ellipsis whitespace-nowrap",
                 isActive
                     ? "bg-accent text-accent-foreground font-medium"
                     : "text-muted-foreground hover:text-foreground",

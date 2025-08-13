@@ -11,6 +11,7 @@
         "deploy": "pnpm run pages:build && wrangler deploy",
         "gen:types": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
         "gen:content": "pnpx tsx scripts/generate-content-json.ts",
+        "gen:post": "pnpx tsx scripts/generate-post.ts",
         "gen:bibtex": "pnpx tsx scripts/generate-bibtex-types.ts",
         "check": "biome check --write ./"
     },
@@ -58,6 +59,7 @@
         "tailwindcss": "^4.1.11",
         "tw-animate-css": "^1.3.6",
         "typescript": "^5",
+        "uuidv7": "^1.0.2",
         "wrangler": "^4.28.0"
     },
     "packageManager": "pnpm@10.12.1",

@@ -18,7 +18,7 @@ export async function generateMetadata({
         }>
     ).find((p) => p.slug === slug);
 
-    const title = (post?.title ?? slug) + " - Nikomaru VRChat Activities";
+    const title = `${post?.title ?? slug} - Nikomaru VRChat Activities`;
     const description = post?.description;
     const image =
         post?.image ??
@@ -62,13 +62,14 @@ export default async function Page({
 
     return (
         <div className="max-w-7xl mx-auto py-4">
-            <div className="lg:hidden mb-6">
-                <TOC />
-            </div>
-
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 {/* メインコンテンツエリア */}
                 <div className="lg:col-span-3">
+                    {/* スマホ用のTOC（markdownコンテンツの上部に配置） */}
+                    <div className="lg:hidden mb-6">
+                        <TOC />
+                    </div>
+
                     <div className="prose prose-lg max-w-none font-regular">
                         <Post />
                     </div>
