@@ -2,7 +2,8 @@
 
 import { OrbitControls, Stage } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
-import { Suspense, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { Suspense } from "react";
 import { GLTFLoader } from "three-stdlib";
 
 export const Model = ({
@@ -12,32 +13,30 @@ export const Model = ({
     modelName: string;
     title: string;
 }) => {
-    const modelPath = `/model/${modelName}`;
+    // モデルパスを状態として管理し、クライアントサイドでのみ計算する
+    const currentPath = usePathname();
 
-    // Avoid running useLoader on the server by delegating to a client-only child
-    // Server will render nothing to prevent Invalid URL from node's URL parser
-    const [isMounted, setIsMounted] = useState(false);
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
+    let modelPath = `/model/${modelName}`;
+    if (modelName.startsWith(":/")) {
+        const uuid = currentPath.split("/").at(-1);
+        modelPath = `/model/${uuid}/${modelName.split(":/")[1]}`;
+    }
 
     return (
         <div className="w-[300px] md:w-[600px] h-[400px] mx-auto my-4 p-8 bg-gradient-to-br from-slate-100 to-sky-50 rounded-lg overflow-hidden shadow-inner">
             <div className="pb-4 font-bold text-xl">{title}</div>
-            {isMounted ? (
-                <Canvas>
-                    <Suspense fallback={null}>
-                        <ModelInner modelPath={modelPath} />
-                        <OrbitControls autoRotate autoRotateSpeed={0.7} />
-                    </Suspense>
-                </Canvas>
-            ) : null}
+            <Canvas>
+                <Suspense fallback={null}>
+                    <ModelInner modelPath={modelPath} />
+                    <OrbitControls autoRotate autoRotateSpeed={0.7} />
+                </Suspense>
+            </Canvas>
         </div>
     );
 };
 
 function ModelInner({ modelPath }: { modelPath: string }) {
-    // Build an absolute URL on the client to satisfy loaders that expect it
+    // クライアントサイドでのみ絶対URLを構築
     const absoluteUrl =
         typeof window !== "undefined"
             ? `${window.location.origin}${modelPath}`

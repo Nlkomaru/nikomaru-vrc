@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/performance/noImgElement: I dont want to use next/image for styling */
 import type { MDXComponents } from "mdx/types";
 import { headers } from "next/headers";
-import type { AdmonitionProps } from "@/components/admonition";
+import type { AdmonitionProps } from "@/components/molecules/admonition";
 import {
     Admonition,
     Danger,
@@ -10,7 +10,9 @@ import {
     Success,
     Tip,
     Warning,
-} from "@/components/admonition";
+} from "@/components/molecules/admonition";
+import { Bibtex } from "@/components/molecules/bibtex";
+import { Model } from "@/components/organisms/model";
 import {
     H1,
     H2,
@@ -53,6 +55,10 @@ const components: MDXComponents = {
     Warning: (props: Omit<AdmonitionProps, "type">) => <Warning {...props} />,
     Danger: (props: Omit<AdmonitionProps, "type">) => <Danger {...props} />,
     Success: (props: Omit<AdmonitionProps, "type">) => <Success {...props} />,
+    Model: ({ modelName, title }) => (
+        <Model modelName={modelName} title={title} />
+    ),
+    Bibtex: ({ bibtex }) => <Bibtex id={bibtex} />,
     img: async (props) => {
         const { src, alt, width, height } = props as {
             src: string;

@@ -1,6 +1,6 @@
 import type React from "react";
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { Footer } from "@/components/organisms/footer";
+import { Header } from "@/components/organisms/header";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
