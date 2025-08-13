@@ -86,13 +86,13 @@ export const Muted = createComponent<HTMLSpanElement>(
 
 export const InlineCode = createComponent<HTMLSpanElement>(
     "code",
-    "relative rounded-sm bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-mono",
+    "relative rounded-sm bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-mono inline-block max-w-full break-all",
     "InlineCode",
 );
 
 export const MultilineCode = createComponent<HTMLPreElement>(
     "pre",
-    "relative rounded-sm bg-muted m-4 p-4 font-mono text-sm overflow-x-auto w",
+    "relative rounded-sm bg-muted m-4 p-4 font-mono text-sm overflow-x-auto",
     "MultilineCode",
 );
 
