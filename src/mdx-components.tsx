@@ -1,6 +1,7 @@
 /** biome-ignore-all lint/performance/noImgElement: I dont want to use next/image for styling */
 import type { MDXComponents } from "mdx/types";
 import { headers } from "next/headers";
+import type { AdmonitionProps } from "@/components/admonition";
 import {
     Admonition,
     Danger,
@@ -10,7 +11,6 @@ import {
     Tip,
     Warning,
 } from "@/components/admonition";
-import type { AdmonitionProps } from "@/components/admonition";
 import {
     H1,
     H2,

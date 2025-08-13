@@ -63,7 +63,13 @@ const TYPE_TO_ICON: Record<
  */
 export const Admonition = forwardRef<HTMLDivElement, AdmonitionProps>(
     (incomingProps, ref) => {
-        const { type = "note", title, className, children, ...rest } = incomingProps;
+        const {
+            type = "note",
+            title,
+            className,
+            children,
+            ...rest
+        } = incomingProps;
         const Icon = TYPE_TO_ICON[type];
 
         // Map severe types to an appropriate ARIA role
