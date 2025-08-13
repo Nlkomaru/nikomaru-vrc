@@ -20,11 +20,22 @@ export function PostCard({ post }: Props) {
                     />
                 </div>
                 <div className="p-4">
-                    <h3 className="text-lg font-medium font-regular">
+                    <h3
+                        className="text-lg font-medium font-regular overflow-hidden text-ellipsis whitespace-nowrap"
+                        title={post.title ?? post.slug}
+                    >
                         {post.title ?? post.slug}
                     </h3>
+                    {post.description ? (
+                        <p
+                            className="text-sm mt-2 text-muted-foreground overflow-hidden text-ellipsis whitespace-nowrap"
+                            title={post.description}
+                        >
+                            {post.description}
+                        </p>
+                    ) : null}
                     {post.date ? (
-                        <p className="text-sm mt-1 font-regular">
+                        <p className="text-sm mt-2 font-regular text-muted-foreground">
                             Published:{" "}
                             {new Date(post.date).toISOString().split("T")[0]}
                         </p>

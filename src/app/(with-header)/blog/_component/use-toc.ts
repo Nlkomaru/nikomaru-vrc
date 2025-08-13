@@ -10,75 +10,95 @@ export function useTOC() {
     const [activeId, setActiveId] = useState<string>("");
 
     useEffect(() => {
-        // ページ内の見出し要素を取得してTOCアイテムを作成
-        const headingElements = document.querySelectorAll("h1, h2, h3, h4");
-        const tocItems: TOCItem[] = Array.from(headingElements).map(
-            (element) => {
-                const id =
-                    element.id ||
-                    element.textContent?.toLowerCase().replace(/\s+/g, "-") ||
-                    "";
-                const text = element.textContent || "";
-                const level = Number.parseInt(element.tagName.charAt(1));
+        // DOMの準備が完了するまで少し待つ
+        const timer = setTimeout(() => {
+            // markdownコンテンツエリア内の見出し要素のみを取得してTOCアイテムを作成
+            // proseクラスを持つコンテナ内の見出しのみを対象とする
+            const contentContainer = document.querySelector(".prose");
 
-                // IDが重複しないようにする
-                if (!element.id) {
-                    element.id = id;
-                }
-
-                return { id, text, level };
-            },
-        );
-
-        setHeadings(tocItems);
-
-        // ページ読み込み時にハッシュフラグメントを処理
-        const handleHashFragment = () => {
-            const hash = window.location.hash.slice(1); // #を除去
-            if (hash) {
-                const targetElement = document.getElementById(hash);
-                if (targetElement) {
-                    // 少し遅延させてからスクロール（DOMの準備が完了してから）
-                    setTimeout(() => {
-                        targetElement.scrollIntoView({ behavior: "smooth" });
-                        setActiveId(hash);
-                    }, 100);
-                }
+            if (!contentContainer) {
+                setHeadings([]);
+                return;
             }
-        };
 
-        // 初回読み込み時のハッシュフラグメント処理
-        handleHashFragment();
+            const headingElements =
+                contentContainer.querySelectorAll("h1, h2, h3, h4");
 
-        // Intersection Observerで現在表示されている見出しを監視
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setActiveId(entry.target.id);
+            const tocItems: TOCItem[] = Array.from(headingElements).map(
+                (element) => {
+                    const id =
+                        element.id ||
+                        element.textContent
+                            ?.toLowerCase()
+                            .replace(/\s+/g, "-") ||
+                        "";
+                    const text = element.textContent || "";
+                    const level = Number.parseInt(element.tagName.charAt(1));
+
+                    // IDが重複しないようにする
+                    if (!element.id) {
+                        element.id = id;
                     }
-                });
-            },
-            {
-                rootMargin: "-20% 0px -80% 0px",
-                threshold: 0,
-            },
-        );
 
-        headingElements.forEach((element) => observer.observe(element));
+                    return { id, text, level };
+                },
+            );
 
-        // ハッシュフラグメントの変更を監視
-        const handleHashChange = () => {
+            setHeadings(tocItems);
+
+            // ページ読み込み時にハッシュフラグメントを処理
+            const handleHashFragment = () => {
+                const hash = window.location.hash.slice(1); // #を除去
+                if (hash) {
+                    const targetElement = document.getElementById(hash);
+                    if (targetElement) {
+                        // 少し遅延させてからスクロール（DOMの準備が完了してから）
+                        setTimeout(() => {
+                            targetElement.scrollIntoView({
+                                behavior: "smooth",
+                            });
+                            setActiveId(hash);
+                        }, 100);
+                    }
+                }
+            };
+
+            // 初回読み込み時のハッシュフラグメント処理
             handleHashFragment();
-        };
 
-        window.addEventListener("hashchange", handleHashChange);
+            // Intersection Observerで現在表示されている見出しを監視
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            setActiveId(entry.target.id);
+                        }
+                    });
+                },
+                {
+                    rootMargin: "-20% 0px -80% 0px",
+                    threshold: 0,
+                },
+            );
 
-        return () => {
-            observer.disconnect();
-            window.removeEventListener("hashchange", handleHashChange);
-        };
-    }, []);
+            headingElements.forEach((element) => observer.observe(element));
+
+            // ハッシュフラグメントの変更を監視
+            const handleHashChange = () => {
+                handleHashFragment();
+            };
+
+            window.addEventListener("hashchange", handleHashChange);
+
+            // クリーンアップ関数を設定
+            return () => {
+                observer.disconnect();
+                window.removeEventListener("hashchange", handleHashChange);
+            };
+        }, 500); // 500ms待つ
+
+        return () => clearTimeout(timer);
+    }, []); // 依存配列を空にして、初回のみ実行
 
     /**
      * 見出しクリック時の処理
