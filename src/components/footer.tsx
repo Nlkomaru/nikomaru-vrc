@@ -3,14 +3,48 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const Footer = () => (
-    <>
-        <div className="hidden md:block">
-            <DesktopFooter />
+    <footer className="w-full border-t border-gray-200">
+        <div className="mx-auto max-w-7xl px-8 py-6 md:px-8 md:py-6">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6 md:gap-0">
+                {/* ロゴと説明 */}
+                <div className="flex flex-col gap-3 items-center md:items-start">
+                    <Link href="/">
+                        <Image
+                            src="/logo.svg"
+                            width={160}
+                            height={45}
+                            className="md:w-[180px] md:h-[50px]"
+                            alt={"Nikomaru vrchat logo"}
+                        />
+                    </Link>
+                </div>
+
+                {/* ナビゲーションリンク */}
+                <div className="flex flex-col gap-6 items-center">
+                    <div className="flex flex-col items-center">
+                        <h3 className="font-semibold text-gray-700 text-center text-lg">
+                            Social
+                        </h3>
+                        <div className="flex justify-center gap-4">
+                            {socialLinks.map((link) => (
+                                <a
+                                    key={link.label}
+                                    href={link.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-3 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-all"
+                                    aria-label={link.label}
+                                >
+                                    {link.icon}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <Copyright />
         </div>
-        <div className="block md:hidden">
-            <MobileFooter />
-        </div>
-    </>
+    </footer>
 );
 
 type SocialLink = {
@@ -42,110 +76,18 @@ const socialLinks: SocialLink[] = [
 
 const Copyright = () => {
     return (
-        <p>
-            Written by Nikomaru in 2025.{" "}
-            <a
-                href="https://github.com/Nlkomaru/nikomaru-vrc/blob/main/LICENSE"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:text-blue-600 underline"
-            >
-                No rights reserved.
-            </a>
-        </p>
+        <div className="mt-6 pt-4 text-center md:text-left text-gray-500 text-sm md:text-base">
+            <p>
+                Written by Nikomaru in 2025.{" "}
+                <a
+                    href="https://github.com/Nlkomaru/nikomaru-vrc/blob/main/LICENSE"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:text-blue-600 underline"
+                >
+                    No rights reserved.
+                </a>
+            </p>
+        </div>
     );
 };
-
-const DesktopFooter = () => (
-    <footer className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="mx-auto max-w-7xl px-8 py-6">
-            <div className="flex justify-between items-center">
-                {/* ロゴと説明 */}
-                <div className="flex flex-col gap-3">
-                    <Link href="/">
-                        <Image
-                            src="/logo.svg"
-                            width={180}
-                            height={50}
-                            alt={"Nikomaru vrchat logo"}
-                        />
-                    </Link>
-                </div>
-
-                {/* ナビゲーションリンク */}
-                <div className="flex gap-16">
-                    <div className="flex flex-col gap-3">
-                        <h3 className="font-semibold text-gray-800 text-lg">
-                            Social
-                        </h3>
-                        <div className="flex gap-3">
-                            {socialLinks.map((link) => (
-                                <a
-                                    key={link.label}
-                                    href={link.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-all"
-                                    aria-label={link.label}
-                                >
-                                    {link.icon}
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* コピーライト */}
-            <div className="mt-6 pt-4 border-t border-gray-200 text-center text-gray-500">
-                <Copyright />
-            </div>
-        </div>
-    </footer>
-);
-
-const MobileFooter = () => (
-    <footer className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="mx-auto max-w-[1440px] p-6">
-            <div className="flex flex-col gap-6">
-                {/* ロゴと説明 */}
-                <div className="flex flex-col gap-3">
-                    <Link href="/">
-                        <Image
-                            src="/logo.svg"
-                            width={160}
-                            height={45}
-                            alt={"Nikomaru vrchat logo"}
-                        />
-                    </Link>
-                </div>
-
-                {/* ソーシャルリンク - 中央寄せで横並び */}
-                <div className="flex flex-col gap-3">
-                    <h3 className="font-semibold text-gray-800 text-center">
-                        ソーシャル
-                    </h3>
-                    <div className="flex justify-center gap-4">
-                        {socialLinks.map((link) => (
-                            <a
-                                key={link.label}
-                                href={link.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-3 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-all"
-                                aria-label={link.label}
-                            >
-                                {link.icon}
-                            </a>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* コピーライト */}
-            <div className="mt-6 pt-4 border-t border-gray-200 text-center text-gray-500 text-sm">
-                <Copyright />
-            </div>
-        </div>
-    </footer>
-);
