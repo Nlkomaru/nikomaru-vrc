@@ -42,7 +42,7 @@ const montserratAlternates = Montserrat_Alternates({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://vrc.nikomaru.com"),
+    metadataBase: new URL("https://vrc.nikomaru.dev"),
     description:
         "A collection of VRChat activities and experiences by Nikomaru",
     title: "Nikomaru - VRChat Activities and Experiences",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
         title: "Nikomaru - VRChat Activities and Experiences",
         description:
             "A collection of VRChat activities and experiences by Nikomaru",
-        url: "https://vrc.nikomaru.com",
+        url: "https://vrc.nikomaru.dev",
         siteName: "Nikomaru - VRChat Activities and Experiences",
         images: [
             {
