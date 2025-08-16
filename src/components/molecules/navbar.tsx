@@ -36,17 +36,18 @@ export const Navbar = () => {
                                     ${
                                         isActive
                                             ? "text-gray-900"
-                                                : "text-gray-500 hover:text-gray-800"
+                                            : "text-gray-500 hover:text-gray-800"
                                     }
                                 `}
                             >
-                                {link.label.charAt(0).toUpperCase() + link.label.slice(1)}
-                                
+                                {link.label.charAt(0).toUpperCase() +
+                                    link.label.slice(1)}
+
                                 {/* 統一感のあるアンダーライン */}
                                 {(isActive || halfActive) && (
                                     <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gray-400 px-5 rounded-sm" />
                                 )}
-                               </Link>
+                            </Link>
                         </li>
                     );
                 })}

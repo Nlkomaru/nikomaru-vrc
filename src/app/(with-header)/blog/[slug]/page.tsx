@@ -22,7 +22,7 @@ export async function generateMetadata({
     const description = post?.description;
     const image =
         post?.image ??
-        "https://scorpioides.nikomaru.dev/0197c5ed-de70-74fb-ad2c-7a6bb2c2240f.png";
+        "/0197c5ed-de70-74fb-ad2c-7a6bb2c2240f.webp";
 
     return {
         title,

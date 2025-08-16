@@ -54,7 +54,7 @@ export const metadata: Metadata = {
         siteName: "Nikomaru - VRChat Activities and Experiences",
         images: [
             {
-                url: "https://scorpioides.nikomaru.dev/0197c5ed-de70-74fb-ad2c-7a6bb2c2240f.png",
+                url: "/0197c5ed-de70-74fb-ad2c-7a6bb2c2240f.webp",
                 width: 1920,
                 height: 1080,
                 alt: "Nikomaru - VRChat Activities and Experiences",
