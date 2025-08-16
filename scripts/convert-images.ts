@@ -13,9 +13,9 @@ async function convertImagesToWebP() {
             await convertFileToWebP(file);
         }
 
-        // 画像変換が完了したのだ！
+        console.info("All images were converted to webp");
     } catch (error) {
-        console.error("エラーが発生したのだ:", error);
+        console.error("Error was occurred:", error);
     }
 }
 
@@ -51,9 +51,8 @@ async function convertFileToWebP(filePath: string) {
         const outputPath = path.join(dir, `${name}.webp`);
 
         if (fs.existsSync(outputPath)) {
-            // 既にwebpファイルが存在する場合、元のファイルを削除
             fs.unlinkSync(filePath);
-            console.info(`既存webpファイルあり・元ファイル削除: ${filePath}`);
+            console.info(`Already converted: ${filePath}`);
             return;
         }
 
@@ -62,13 +61,12 @@ async function convertFileToWebP(filePath: string) {
         const beforeSize = fs.statSync(filePath).size;
         const afterSize = fs.statSync(outputPath).size;
 
-        // 変換完了後、元のファイルを削除
         fs.unlinkSync(filePath);
         console.info(
-            `変換完了・元ファイル削除: ${filePath} -> ${outputPath} ${beforeSize} -> ${afterSize} ${(beforeSize / afterSize) * 100}%`,
+            `Converted: ${filePath} -> ${outputPath} ${beforeSize} -> ${afterSize} ${(beforeSize / afterSize) * 100}%`,
         );
     } catch (error) {
-        console.error(`変換エラー ${filePath}:`, error);
+        console.error(`Error converting ${filePath}:`, error);
     }
 }
 

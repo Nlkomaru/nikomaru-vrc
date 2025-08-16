@@ -20,9 +20,7 @@ export async function generateMetadata({
 
     const title = `${post?.title ?? slug} - Nikomaru VRChat Activities`;
     const description = post?.description;
-    const image =
-        post?.image ??
-        "/0197c5ed-de70-74fb-ad2c-7a6bb2c2240f.webp";
+    const image = post?.image ?? "/0197c5ed-de70-74fb-ad2c-7a6bb2c2240f.webp";
 
     return {
         title,
