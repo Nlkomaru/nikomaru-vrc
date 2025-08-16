@@ -62,14 +62,7 @@ const TYPE_TO_ICON: Record<
  * A callout box for notes, tips, warnings, etc., optimized for MDX usage.
  */
 export const Admonition = forwardRef<HTMLDivElement, AdmonitionProps>(
-    (incomingProps, ref) => {
-        const {
-            type = "note",
-            title,
-            className,
-            children,
-            ...rest
-        } = incomingProps;
+    ({ type = "note", title, className, children, ...rest }, ref) => {
         const Icon = TYPE_TO_ICON[type];
 
         // Map severe types to an appropriate ARIA role
@@ -77,8 +70,10 @@ export const Admonition = forwardRef<HTMLDivElement, AdmonitionProps>(
 
         return (
             <div
+                // biome-ignore lint/style/noParameterAssign: forwardRefの標準的なパターン
                 ref={ref}
                 role={role}
+                {...(role === "alert" && { "aria-label": title ?? type })}
                 className={cn(
                     "not-prose w-full border rounded-md px-4 py-3 my-4 flex gap-3",
                     "shadow-sm",

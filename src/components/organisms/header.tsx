@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MenuDrawer } from "./menu-drawer";
+import { MenuDrawer } from "../molecules/menu-drawer";
+import { Navbar } from "../molecules/navbar";
 
 export const Header = () => (
     <>
@@ -28,24 +29,6 @@ const DesktopHeader = () => (
         </div>
     </header>
 );
-
-const navLinks = ["photography", "blog", "about"];
-
-const Navbar = () => {
-    return (
-        <nav>
-            <ul className="flex gap-16 text-lg text-gray-800">
-                {navLinks.map((link) => (
-                    <li key={link}>
-                        <Link href={`/${link}`}>
-                            {link.charAt(0).toUpperCase() + link.slice(1)}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-        </nav>
-    );
-};
 
 const MobileHeader = () => (
     <header className=" justify-between items-center mx-auto max-w-[1440px] p-6">

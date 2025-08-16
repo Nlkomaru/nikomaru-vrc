@@ -3,8 +3,8 @@ import Image from "next/image";
 export const Scene = () => {
     return (
         <Image
-            src="/bg-image-1.png"
-            blurDataURL={"/bg-image-1.png"}
+            src="/bg-image-1.webp"
+            blurDataURL={"/bg-image-1.webp"}
             placeholder="blur"
             alt="Background Image"
             width={1920}

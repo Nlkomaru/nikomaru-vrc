@@ -20,9 +20,7 @@ export async function generateMetadata({
 
     const title = `${post?.title ?? slug} - Nikomaru VRChat Activities`;
     const description = post?.description;
-    const image =
-        post?.image ??
-        "https://scorpioides.nikomaru.dev/0197c5ed-de70-74fb-ad2c-7a6bb2c2240f.png";
+    const image = post?.image ?? "/0197c5ed-de70-74fb-ad2c-7a6bb2c2240f.webp";
 
     return {
         title,
@@ -42,7 +40,7 @@ export async function generateMetadata({
                   site: "https://vrc.nikomaru.dev",
                   title,
                   description,
-                  images: [image],
+                  images: [`https://vrc.nikomaru.dev${image}`],
               }
             : undefined,
     } satisfies Metadata;

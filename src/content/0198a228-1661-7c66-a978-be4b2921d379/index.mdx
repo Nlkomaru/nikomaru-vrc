@@ -26,23 +26,23 @@ FaceEmo 側でリップシンクが有効になっているかを先に確認し
 
 まず、そもそもFaceEmoの方でリップシンクが有効となっているか確認してください。
 
-<img width="400" className="rounded-md mx-auto" src="/assets/0198a228-1661-7c66-a978-be4b2921d379/face-emo.png" alt="FaceEmoのリップシンク設定画面" />
+<img width="400" className="rounded-md mx-auto" src="/assets/0198a228-1661-7c66-a978-be4b2921d379/face-emo.webp" alt="FaceEmoのリップシンク設定画面" />
 
 この設定で有効になっているにもかかわらず、リップシンクが動かない場合は、AnimatorのパラメーターにVRChatのlipsyncのパラメータ(`vrc.v_*`)が含まれている可能性があります。
 
 では次に、Animatorのパラメータを確認してみましょう。
 
-![ZitomeのAnimator選択](/assets/0198a228-1661-7c66-a978-be4b2921d379/zito.png)
+![ZitomeのAnimator選択](/assets/0198a228-1661-7c66-a978-be4b2921d379/zito.webp)
 
 表情選択のところから右下のAnimatorをクリックします。今回の例では`zitome`と書いてあるところです。
 
 クリックすると、Projectの方でAnimatorが複数あるTabが出てきます（画面中央の下）。
 
-![AnimatorのTab](/assets/0198a228-1661-7c66-a978-be4b2921d379/animator_tab.png)
+![AnimatorのTab](/assets/0198a228-1661-7c66-a978-be4b2921d379/animator_tab.webp)
 
 ここで、黄色く囲われたAnimatorをダブルクリックすると次のような画面が出てきます。
 
-![Animatorのパラメーター](/assets/0198a228-1661-7c66-a978-be4b2921d379/animator.png)
+![Animatorのパラメーター](/assets/0198a228-1661-7c66-a978-be4b2921d379/animator.webp)
 
 これは、`zitome`のAnimatorではなく、私の環境で正常に動作しない原因となっていたAnimatorです。このように左側のパラメータの中に`vrc.v_*`のパラメータが含まれている場合は、リップシンクが動かない可能性があります。
 
@@ -54,7 +54,7 @@ FaceEmo 側でリップシンクが有効になっているかを先に確認し
 また、この作業は破壊的な操作です。バックアップを取った上で実施してください。
 </Danger>
 
-![削除対象のパラメーター](/assets/0198a228-1661-7c66-a978-be4b2921d379/animator_paramator.png)
+![削除対象のパラメーター](/assets/0198a228-1661-7c66-a978-be4b2921d379/animator_paramator.webp)
 
 このチェックをFaceEmoを用いて導入しているすべてのアニメーターに対して行ってください。私の場合は導入している16の表情のうち2つの表情においてこのようなパラメータが含まれていました。
 

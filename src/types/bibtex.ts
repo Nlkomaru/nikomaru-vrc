@@ -13,11 +13,11 @@ export interface BibTeXEntry {
 // BibTeXのIDの型定義（自動生成される）
 //start
 export type BibTeXId =
-    | "R100000002-I026732388"
-    | "R100000002-I029782896"
-    | "R100000002-I030122788"
-    | "R100000002-I031794026"
-    | "R100000002-I033001065";
+    | "3d-graphics-game-developer"
+    | "blender-3d-tutorial"
+    | "mobile-game-math-unity"
+    | "unity-development-tutorial"
+    | "unity-game-effects-guide";
 //end
 
 // BibTeXテキストを解析する関数
