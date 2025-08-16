@@ -42,7 +42,7 @@ export async function generateMetadata({
                   site: "https://vrc.nikomaru.dev",
                   title,
                   description,
-                  images: [image],
+                  images: [`https://vrc.nikomaru.dev${image}`],
               }
             : undefined,
     } satisfies Metadata;
