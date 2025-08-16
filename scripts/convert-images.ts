@@ -56,14 +56,19 @@ async function convertFileToWebP(filePath: string) {
             return;
         }
 
-        await sharp(filePath).webp({ quality: 80 }).toFile(outputPath);
+        await sharp(filePath)
+            .webp({ lossless: true, quality: 100 })
+            .toFile(outputPath);
 
         const beforeSize = fs.statSync(filePath).size;
         const afterSize = fs.statSync(outputPath).size;
 
         fs.unlinkSync(filePath);
+        const rate = ((beforeSize - afterSize) / beforeSize) * 100;
+        const beforeSizeMB = (beforeSize / 1024 / 1024).toFixed(2);
+        const afterSizeMB = (afterSize / 1024 / 1024).toFixed(2);
         console.info(
-            `Converted: ${filePath} -> ${outputPath} ${beforeSize} -> ${afterSize} ${(beforeSize / afterSize) * 100}%`,
+            `Converted: ${filePath} -> ${outputPath} ${beforeSizeMB}MB -> ${afterSizeMB}MB ${rate.toFixed(2)}%`,
         );
     } catch (error) {
         console.error(`Error converting ${filePath}:`, error);
