@@ -19,7 +19,7 @@ export function PostCard({ post }: Props) {
                         className="object-cover"
                     />
                 </div>
-                <div className="p-4">
+                <div className="p-4 bg-white/50 backdrop-blur-sm">
                     <h3
                         className="text-lg font-medium font-regular overflow-hidden text-ellipsis whitespace-nowrap"
                         title={post.title ?? post.slug}

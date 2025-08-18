@@ -1,6 +1,6 @@
-# Nikomaru-vrc nikomaru's portfolio site for VRChat
+# Nikomaru-vrc Nikomaru's portfolio site for VRChat
 
-## ✨ 概要
+## ✨ Overview
 
 This is a website to showcase something related to VRChat.
 
@@ -8,7 +8,8 @@ This is a website to showcase something related to VRChat.
 - Framework: Next.js 15 (with Opennext)
 - Language: TypeScript
 - Package Manager: pnpm
-- UI Library: Shadcn UI
+- Headless Library: Radix UI
+- Component Library: Shadcn UI
 - 3D Rendering: Three.js
 - CSS Library: Tailwind CSS
 - Deployment: Cloudflare Workers

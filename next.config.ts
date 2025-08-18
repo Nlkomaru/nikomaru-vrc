@@ -7,6 +7,18 @@ import remarkToc from "remark-toc";
 const nextConfig: NextConfig = {
     /* config options here */
     pageExtensions: ["ts", "tsx", "mdx"],
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "loremflickr.com",
+            },
+            {
+                protocol: "https",
+                hostname: "picsum.photos",
+            },
+        ],
+    },
 };
 
 const withMDX = createMDX({
