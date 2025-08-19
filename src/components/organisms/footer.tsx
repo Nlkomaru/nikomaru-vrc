@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const Footer = () => (
-    <footer className="w-full border-t border-gray-200">
+    <footer className="w-full bg-[oklch(0.88_0.00_67.80/0.1)] backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-8 py-6 md:px-8 md:py-6">
             <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6 md:gap-0">
                 {/* ロゴと説明 */}

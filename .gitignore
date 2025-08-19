@@ -39,3 +39,5 @@ next-env.d.ts
 /.open-next
 
 src/app/(with-header)/blog/content.json
+
+.playwright-mcp
