@@ -59,7 +59,7 @@ export default async function Page({
     }
 
     return (
-        <div className="max-w-7xl mx-auto py-4">
+        <div className="py-4">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 {/* メインコンテンツエリア */}
                 <div className="lg:col-span-3">
@@ -68,7 +68,7 @@ export default async function Page({
                         <TOC />
                     </div>
 
-                    <div className="prose prose-lg max-w-none font-regular">
+                    <div className="prose prose-lg font-regular max-w-none mx-0 px-0 prose-headings:ml-0 prose-p:ml-0">
                         <Post />
                     </div>
                 </div>

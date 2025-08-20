@@ -39,7 +39,7 @@ export function TOC({ className }: TOCProps) {
 
             {/* TOCカード（スマホ用：条件付き表示、デスクトップ用：常時表示） */}
             <div className={isVisible ? "block lg:block" : "hidden lg:block"}>
-                <Card>
+                <Card className="w-[20rem]">
                     <CardHeader className="pb-3">
                         <CardTitle className="text-lg">
                             Table of Contents
