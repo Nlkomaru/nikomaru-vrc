@@ -4,6 +4,7 @@ import { List } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { TOCContent } from "./toc-content";
 import type { TOCProps } from "./toc-types";
 import { useTOC } from "./use-toc";
@@ -15,10 +16,10 @@ import { useTOC } from "./use-toc";
  */
 export function TOC({ className }: TOCProps) {
     const [isVisible, setIsVisible] = useState(false); // TOCカードの表示/非表示状態
-    const { headings, activeId, handleHeadingClick } = useTOC();
+    const { headings, activeId, handleHeadingClick, isLoading } = useTOC();
 
     // 見出しが存在しない場合は何も表示しない
-    if (headings.length === 0) {
+    if (!isLoading && headings.length === 0) {
         return null;
     }
 
@@ -39,18 +40,34 @@ export function TOC({ className }: TOCProps) {
 
             {/* TOCカード（スマホ用：条件付き表示、デスクトップ用：常時表示） */}
             <div className={isVisible ? "block lg:block" : "hidden lg:block"}>
-                <Card className="w-[20rem]">
-                    <CardHeader className="pb-3">
-                        <CardTitle className="text-lg">
-                            Table of Contents
-                        </CardTitle>
-                    </CardHeader>
-                    <TOCContent
-                        headings={headings}
-                        activeId={activeId}
-                        onHeadingClick={handleHeadingClick}
-                    />
-                </Card>
+                {isLoading ? (
+                    <Card className="w-[20rem]">
+                        <CardHeader className="pb-3">
+                            <CardTitle className="text-lg">
+                                Table of Contents
+                            </CardTitle>
+                        </CardHeader>
+                        <div className="px-6 pb-6">
+                            <div className="space-y-2">
+                                <Skeleton className="h-6 w-3/4" />
+                                <Skeleton className="h-4 w-2/3" />
+                            </div>
+                        </div>
+                    </Card>
+                ) : (
+                    <Card className="w-[20rem]">
+                        <CardHeader className="pb-3">
+                            <CardTitle className="text-lg">
+                                Table of Contents
+                            </CardTitle>
+                        </CardHeader>
+                        <TOCContent
+                            headings={headings}
+                            activeId={activeId}
+                            onHeadingClick={handleHeadingClick}
+                        />
+                    </Card>
+                )}
             </div>
         </div>
     );

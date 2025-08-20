@@ -1,7 +1,6 @@
 "use client";
 
 import { faker } from "@faker-js/faker";
-import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 
