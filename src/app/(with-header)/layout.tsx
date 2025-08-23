@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="relative min-h-screen flex flex-col">
             <PastelBlobs />
             <Header />
-            <main className="flex-1 max-w-7xl mx-auto px-6 py-4">
+            <main className="flex-1 max-w-7xl mx-auto px-8 py-4">
                 {children}
             </main>
             <Footer />

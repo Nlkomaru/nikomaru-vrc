@@ -1,7 +1,6 @@
 "use client";
 
 import { faker } from "@faker-js/faker";
-import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 
@@ -16,7 +15,9 @@ export const PastelBlobs = () => {
     // Build blob specs using faker's deterministic randomness per path
     const blobs = useMemo(() => {
         // Set faker seed based on pathname for consistent results per route
-        faker.seed(pathname.length + pathname.charCodeAt(0) + pathname.charCodeAt(1));
+        faker.seed(
+            pathname.length + pathname.charCodeAt(0) + pathname.charCodeAt(1),
+        );
 
         // Palette of soft Tailwind colors with transparency
         // Number of blobs: 5-9 depending on seed
@@ -78,13 +79,13 @@ export const PastelBlobs = () => {
             {blobs.map((b) => (
                 <div
                     key={b.key}
-                    className={`absolute rounded-full blur-2xl`}
+                    className={"absolute rounded-full blur-2xl"}
                     style={{
                         top: `${b.topPercent}%`,
                         left: `${b.leftPercent}%`,
                         width: `${b.sizePx}px`,
                         height: `${b.sizePx}px`,
-						backgroundColor: b.colorClass,
+                        backgroundColor: b.colorClass,
                     }}
                 />
             ))}

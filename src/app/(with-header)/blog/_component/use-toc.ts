@@ -8,6 +8,7 @@ import type { TOCItem } from "./toc-types";
 export function useTOC() {
     const [headings, setHeadings] = useState<TOCItem[]>([]);
     const [activeId, setActiveId] = useState<string>("");
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         // DOMの準備が完了するまで少し待つ
@@ -18,6 +19,8 @@ export function useTOC() {
 
             if (!contentContainer) {
                 setHeadings([]);
+                // 取得対象が見つからない場合でもローディングは終了とする
+                setIsLoading(false);
                 return;
             }
 
@@ -45,6 +48,8 @@ export function useTOC() {
             );
 
             setHeadings(tocItems);
+            // 見出し取得完了時にローディングを終了
+            setIsLoading(false);
 
             // ページ読み込み時にハッシュフラグメントを処理
             const handleHashFragment = () => {
@@ -122,5 +127,6 @@ export function useTOC() {
         headings,
         activeId,
         handleHeadingClick,
+        isLoading,
     };
 }
