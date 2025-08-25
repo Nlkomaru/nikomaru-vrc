@@ -7,7 +7,10 @@ type Props = {
 };
 
 export function PostCard({ post }: Props) {
-    const img = (post.image ?? "/bg-image.webp") as string;
+    let img = (post.image ?? "/bg-image.webp") as string;
+    if (img.startsWith(":/")) {
+        img = `/assets/${post.slug}${img.slice(1)}`;
+    }
     return (
         <Link href={`/blog/${post.slug}`}>
             <article className="h-full rounded-lg overflow-hidden bg-white/5 border border-border">
