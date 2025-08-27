@@ -2,9 +2,9 @@
 
 import { OrbitControls, Stage } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
-import { usePathname } from "next/navigation";
 import { Suspense } from "react";
-import { GLTFLoader } from "three-stdlib";
+import { Scene } from "three";
+import { DRACOLoader, GLTFLoader } from "three-stdlib";
 
 export const Model = ({
     modelName,
@@ -13,13 +13,10 @@ export const Model = ({
     modelName: string;
     title: string;
 }) => {
-    // モデルパスを状態として管理し、クライアントサイドでのみ計算する
-    const currentPath = usePathname();
 
     let modelPath = `/model/${modelName}`;
     if (modelName.startsWith(":/")) {
-        const uuid = currentPath.split("/").at(-1);
-        modelPath = `/model/${uuid}/${modelName.split(":/")[1]}`;
+        modelPath = `/model/${modelName.split(":/")[1]}`;
     }
 
     return (
@@ -41,7 +38,14 @@ function ModelInner({ modelPath }: { modelPath: string }) {
         typeof window !== "undefined"
             ? `${window.location.origin}${modelPath}`
             : modelPath;
-    const { scene } = useLoader(GLTFLoader, absoluteUrl);
+    const loader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
+    loader.setDRACOLoader(dracoLoader);
+    const scene = new Scene();
+    loader.load(absoluteUrl, (gltf) => {
+        scene.add(gltf.scene);
+    });
     return (
         <Stage
             adjustCamera
