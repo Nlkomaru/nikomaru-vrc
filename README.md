@@ -14,6 +14,13 @@ This is a website to showcase something related to VRChat.
 - CSS Library: Tailwind CSS
 - Deployment: Cloudflare Workers
 
+## Development
+
+### Compress Models
+
+```bash
+pnpx @gltf-transform/cli optimize tree.gltf tree.glb --compress draco --texture-compress webp
+```
 
 ## License
 
