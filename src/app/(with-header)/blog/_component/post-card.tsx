@@ -13,7 +13,7 @@ export function PostCard({ post }: Props) {
     }
     return (
         <Link href={`/blog/${post.slug}`}>
-            <article className="h-full rounded-lg overflow-hidden bg-white/5 border border-border">
+            <article className="h-full rounded-md overflow-hidden bg-white/5 border border-border">
                 <div className="relative w-full aspect-[16/9]">
                     <Image
                         src={img}
