@@ -2,22 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import type { PostMeta } from "./types";
 
-type Props = {
-    post: PostMeta;
-};
+export function PostCard({ post }: { post: PostMeta }) {
+    const img = (post.thumbnail?.[0]?.url ?? "/bg-image.webp") as string;
 
-export function PostCard({ post }: Props) {
-    let img = (post.image ?? "/bg-image.webp") as string;
-    if (img.startsWith(":/")) {
-        img = `/assets/${post.slug}${img.slice(1)}`;
-    }
     return (
-        <Link href={`/blog/${post.slug}`}>
+        <Link href={`/blog/${post.id}`}>
             <article className="h-full rounded-md overflow-hidden bg-white/5 border border-border">
                 <div className="relative w-full aspect-[16/9]">
                     <Image
                         src={img}
-                        alt={post.title ?? post.slug}
+                        alt={post.title ?? post.id}
                         fill
                         className="object-cover"
                     />
@@ -25,7 +19,7 @@ export function PostCard({ post }: Props) {
                 <div className="p-4 bg-white/50 backdrop-blur-sm">
                     <h3
                         className="text-lg font-medium font-regular overflow-hidden text-ellipsis whitespace-nowrap"
-                        title={post.title ?? post.slug}
+                        title={post.title ?? post.id}
                     >
                         {post.title ?? post.slug}
                     </h3>
@@ -37,10 +31,14 @@ export function PostCard({ post }: Props) {
                             {post.description}
                         </p>
                     ) : null}
-                    {post.date ? (
+                    {post.created_at ? (
                         <p className="text-sm mt-2 font-regular text-muted-foreground">
                             Published:{" "}
-                            {new Date(post.date).toISOString().split("T")[0]}
+                            {
+                                new Date(post.created_at)
+                                    .toISOString()
+                                    .split("T")[0]
+                            }
                         </p>
                     ) : null}
                 </div>
