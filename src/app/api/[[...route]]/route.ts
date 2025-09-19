@@ -13,7 +13,7 @@ app.get("/model/:modelName", async (c) => {
     const modelName = c.req.param("modelName");
     const data = await fetch(`https://cdn.vrc.nikomaru.dev/${modelName}`);
     const blob = await data.blob();
-    return c.body(blob as any, 200, {
+    return c.body(blob, 200, {
         "Content-Type": "application/octet-stream",
     });
 });

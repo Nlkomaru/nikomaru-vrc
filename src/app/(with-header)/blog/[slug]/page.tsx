@@ -1,19 +1,22 @@
 import { redirect as redirectTo } from "next/navigation";
 import { NotionAPI } from "notion-client";
-import React from "react";
 import { Render } from "./_component/render";
 import { ScrollToTop } from "./_component/toc/scroll-to-top";
 import { TOC } from "./_component/toc/toc";
-import { redirectMap } from "./layout";
+import { redirectMap } from "./redirect";
 
-export default async function Page({ params }: { params: { id: string } }) {
-    const { id } = await params;
-    const redirect = redirectMap.find((redirect) => redirect.from === id);
+export default async function Page({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}) {
+    const { slug } = await params;
+    const redirect = redirectMap.find((redirect) => redirect.from === slug);
     if (redirect) {
         return redirectTo(redirect.to);
     }
     const notion = new NotionAPI();
-    const recordMap = await notion.getPage(id);
+    const recordMap = await notion.getPage(slug);
 
     return (
         <div className="flex justify-between">
@@ -37,5 +40,3 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
     );
 }
-
-//TODO redirect処理

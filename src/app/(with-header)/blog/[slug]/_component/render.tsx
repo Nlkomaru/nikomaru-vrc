@@ -10,26 +10,27 @@ const Code = dynamic(() =>
     import("react-notion-x/build/third-party/code").then((m) => m.Code),
 );
 
+export const CustomLink = (props: {
+    href?: string;
+    children: React.ReactNode;
+}) => {
+    const url = props.href;
+    if (url?.startsWith("https://cdn.vrc.nikomaru.dev/")) {
+        return <Model url={url} />;
+    }
+    return (
+        <Link
+            href={url ?? "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-dashed decoration-primary underline-offset-4"
+        >
+            {props.children}
+        </Link>
+    );
+};
+
 export const Render = ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
-    const CustomLink = (props: {
-        href?: string;
-        children: React.ReactNode;
-    }) => {
-        const url = props.href;
-        if (url?.startsWith("https://cdn.vrc.nikomaru.dev/")) {
-            return <Model url={url} />;
-        }
-        return (
-            <Link
-                href={url ?? "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline decoration-dashed decoration-primary underline-offset-4"
-            >
-                {props.children}
-            </Link>
-        );
-    };
     return (
         <NotionRenderer
             recordMap={recordMap}

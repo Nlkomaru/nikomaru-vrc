@@ -70,7 +70,6 @@ export const Admonition = forwardRef<HTMLDivElement, AdmonitionProps>(
 
         return (
             <div
-                // biome-ignore lint/style/noParameterAssign: forwardRefの標準的なパターン
                 ref={ref}
                 role={role}
                 {...(role === "alert" && { "aria-label": title ?? type })}

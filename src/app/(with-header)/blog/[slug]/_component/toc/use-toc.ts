@@ -85,7 +85,9 @@ export function useTOC() {
             const anchorDivs = contentContainer.querySelectorAll<HTMLElement>(
                 ".notion-header-anchor[id]",
             );
-            anchorDivs.forEach((el) => observer.observe(el));
+            anchorDivs.forEach((el) => {
+                observer.observe(el);
+            });
 
             // ハッシュフラグメントの変更を監視
             const handleHashChange = () => {
