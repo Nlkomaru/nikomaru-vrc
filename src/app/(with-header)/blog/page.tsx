@@ -3,11 +3,8 @@ import { PostCard } from "./_component/post-card";
 import type { PostMeta } from "./_component/types";
 
 export default async function BlogIndexPage() {
-<<<<<<< HEAD
     const { env } = await getCloudflareContext({ async: true });
-=======
-    const { env } = getCloudflareContext();
->>>>>>> ffd804585717b7c3075a2ff9d870fca18250f814
+
     const res = await fetch(`${env.TABLE_URL}`);
     let json = await res.json<PostMeta[]>();
     json.sort(

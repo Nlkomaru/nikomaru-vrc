@@ -85,13 +85,10 @@ export function useTOC() {
             const anchorDivs = contentContainer.querySelectorAll<HTMLElement>(
                 ".notion-header-anchor[id]",
             );
-<<<<<<<< HEAD:src/app/(with-header)/blog/[slug]/_component/toc/use-toc.ts
             anchorDivs.forEach((el) => {
                 observer.observe(el);
             });
-========
-            anchorDivs.forEach((el) => observer.observe(el));
->>>>>>>> ffd804585717b7c3075a2ff9d870fca18250f814:src/app/(with-header)/blog/[id]/_component/toc/use-toc.ts
+
 
             // ハッシュフラグメントの変更を監視
             const handleHashChange = () => {
