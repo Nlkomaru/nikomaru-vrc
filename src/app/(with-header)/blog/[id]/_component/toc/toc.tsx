@@ -41,7 +41,7 @@ export function TOC({ className }: TOCProps) {
             {/* TOCカード（スマホ用：条件付き表示、デスクトップ用：常時表示） */}
             <div className={isVisible ? "block lg:block" : "hidden lg:block"}>
                 {isLoading ? (
-                    <Card className="md:w-[20rem] w-full">
+                    <Card className="w-full lg:w-[20rem]">
                         <CardHeader className="pb-3">
                             <CardTitle className="text-lg">
                                 Table of Contents
@@ -55,7 +55,7 @@ export function TOC({ className }: TOCProps) {
                         </div>
                     </Card>
                 ) : (
-                    <Card className="md:w-[20rem] w-full">
+                    <Card className="w-full lg:w-[20rem]">
                         <CardHeader className="pb-3">
                             <CardTitle className="text-lg">
                                 Table of Contents

@@ -1,34 +1,25 @@
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { PostCard } from "./_component/post-card";
 import type { PostMeta } from "./_component/types";
-import postsData from "./content.json";
 
-export default function BlogIndexPage() {
-    // const posts = getMockPosts();
-    const posts = postsData as PostMeta[];
+export default async function BlogIndexPage() {
+    const { env } = getCloudflareContext();
+    const res = await fetch(`${env.TABLE_URL}`);
+    let json = await res.json<PostMeta[]>();
+    json.sort(
+        (a, b) =>
+            new Date(b.created_at ?? "").getTime() -
+            new Date(a.created_at ?? "").getTime(),
+    );
+    json = json.filter(
+        (post: PostMeta) => !post.description?.startsWith("_hidden"),
+    );
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.map((post) => (
-                <PostCard key={post.slug} post={post} />
+            {json.map((post: PostMeta) => (
+                <PostCard key={post.id} post={post} />
             ))}
         </div>
     );
 }
-
-// function getMockPosts(length: number = 20): PostMeta[] {
-//     // Generate mock posts via faker to simulate realistic blog content.
-//     return Array.from({ length }).map((): PostMeta => {
-//         const includeImage = faker.datatype.boolean();
-//         const includeDescription = faker.datatype.boolean();
-//         const includeTags = faker.datatype.boolean();
-
-//         return {
-//             slug: faker.string.uuid(),
-//             title: faker.lorem.sentence(),
-//             date: faker.date.recent({ days: 365 }).toISOString(),
-//             tags: includeTags ? faker.lorem.words(3).split(" ") : undefined,
-//             description: includeDescription ? faker.lorem.sentence() : undefined,
-//             image: includeImage ? `https://picsum.photos/seed/${faker.number.int({ min: 100, max: 1000 })}/1920/1080` : undefined,
-//         };
-//     });
-// }

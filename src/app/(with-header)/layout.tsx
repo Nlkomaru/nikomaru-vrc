@@ -5,13 +5,11 @@ import PastelBlobs from "@/components/organisms/pastel-blobs";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="relative min-h-screen flex flex-col">
+        <>
             <PastelBlobs />
             <Header />
-            <main className="flex-1 max-w-7xl mx-auto px-8 py-4">
-                {children}
-            </main>
+            <main className="mx-auto max-w-7xl px-8 py-4 ">{children}</main>
             <Footer />
-        </div>
+        </>
     );
 }

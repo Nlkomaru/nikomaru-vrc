@@ -1,30 +1,19 @@
 "use client";
 
 import { OrbitControls, Stage } from "@react-three/drei";
-import { Canvas, useLoader } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import { Scene } from "three";
 import { DRACOLoader, GLTFLoader } from "three-stdlib";
 
-export const Model = ({
-    modelName,
-    title = "Model Viewer",
-}: {
-    modelName: string;
-    title: string;
-}) => {
-
-    let modelPath = `/model/${modelName}`;
-    if (modelName.startsWith(":/")) {
-        modelPath = `/model/${modelName.split(":/")[1]}`;
-    }
-
+export const Model = ({ url, title }: { url: string; title?: string }) => {
+    const modelName = url.split("?")[0].split("/").pop();
     return (
-        <div className="w-[300px] md:w-[600px] h-[400px] mx-auto my-4 p-8 bg-gradient-to-br from-slate-100 to-sky-50 rounded-lg overflow-hidden shadow-inner">
-            <div className="pb-4 font-bold text-xl">{title}</div>
+        <div className="w-[300px] md:w-[600px] h-[400px] mx-auto mt-2 p-8 bg-gradient-to-br from-slate-100 to-sky-100 rounded-lg overflow-hidden shadow-inner">
+            <div className="pb-4 font-bold text-xl">{title || modelName}</div>
             <Canvas>
                 <Suspense fallback={null}>
-                    <ModelInner modelPath={modelPath} />
+                    <ModelInner modelPath={`/api/model/${modelName}`} />
                     <OrbitControls autoRotate autoRotateSpeed={0.7} />
                 </Suspense>
             </Canvas>
@@ -40,7 +29,9 @@ function ModelInner({ modelPath }: { modelPath: string }) {
             : modelPath;
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
+    dracoLoader.setDecoderPath(
+        "https://www.gstatic.com/draco/versioned/decoders/1.5.7/",
+    );
     loader.setDRACOLoader(dracoLoader);
     const scene = new Scene();
     loader.load(absoluteUrl, (gltf) => {

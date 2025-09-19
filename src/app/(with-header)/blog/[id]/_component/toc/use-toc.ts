@@ -13,42 +13,38 @@ export function useTOC() {
     useEffect(() => {
         // DOMの準備が完了するまで少し待つ
         const timer = setTimeout(() => {
-            // markdownコンテンツエリア内の見出し要素のみを取得してTOCアイテムを作成
-            // proseクラスを持つコンテナ内の見出しのみを対象とする
+            // notion-hash-linkを持つアンカーからTOCを生成
             const contentContainer = document.querySelector(".prose");
-
             if (!contentContainer) {
                 setHeadings([]);
-                // 取得対象が見つからない場合でもローディングは終了とする
                 setIsLoading(false);
                 return;
             }
-
-            const headingElements =
-                contentContainer.querySelectorAll("h1, h2, h3, h4");
-
-            const tocItems: TOCItem[] = Array.from(headingElements).map(
-                (element) => {
-                    const id =
-                        element.id ||
-                        element.textContent
-                            ?.toLowerCase()
-                            .replace(/\s+/g, "-") ||
-                        "";
-                    const text = element.textContent || "";
-                    const level = Number.parseInt(element.tagName.charAt(1));
-
-                    // IDが重複しないようにする
-                    if (!element.id) {
-                        element.id = id;
-                    }
-
+            // notion-hash-linkを全て取得
+            const anchorElements =
+                contentContainer.querySelectorAll("a.notion-hash-link");
+            const tocItems: TOCItem[] = Array.from(anchorElements)
+                .map((anchor) => {
+                    // 親のnotion-h（notion-h1, notion-h2, ...）を取得
+                    const parent = anchor.closest<HTMLElement>(".notion-h");
+                    if (!parent) return null;
+                    // レベルをクラス名から判定
+                    let level = 1;
+                    if (parent.classList.contains("notion-h1")) level = 1;
+                    else if (parent.classList.contains("notion-h2")) level = 2;
+                    else if (parent.classList.contains("notion-h3")) level = 3;
+                    else if (parent.classList.contains("notion-h4")) level = 4;
+                    // notion-h-titleからテキスト取得
+                    const titleEl =
+                        parent.querySelector<HTMLElement>(".notion-h-title");
+                    const text = titleEl?.innerText || parent.textContent || "";
+                    // idはhrefの#以降
+                    const href = anchor.getAttribute("href") || "";
+                    const id = href.startsWith("#") ? href.slice(1) : href;
                     return { id, text, level };
-                },
-            );
-
+                })
+                .filter(Boolean) as TOCItem[];
             setHeadings(tocItems);
-            // 見出し取得完了時にローディングを終了
             setIsLoading(false);
 
             // ページ読み込み時にハッシュフラグメントを処理
@@ -57,18 +53,18 @@ export function useTOC() {
                 if (hash) {
                     const targetElement = document.getElementById(hash);
                     if (targetElement) {
-                        // 少し遅延させてからスクロール（DOMの準備が完了してから）
                         setTimeout(() => {
-                            targetElement.scrollIntoView({
-                                behavior: "smooth",
-                            });
+                            // notion-header-anchorの上に60px余白を確保してスクロール
+                            const y =
+                                targetElement.getBoundingClientRect().top +
+                                window.scrollY -
+                                60;
+                            window.scrollTo({ top: y, behavior: "smooth" });
                             setActiveId(hash);
                         }, 100);
                     }
                 }
             };
-
-            // 初回読み込み時のハッシュフラグメント処理
             handleHashFragment();
 
             // Intersection Observerで現在表示されている見出しを監視
@@ -85,37 +81,39 @@ export function useTOC() {
                     threshold: 0,
                 },
             );
-
-            headingElements.forEach((element) => observer.observe(element));
+            // notion-header-anchor（id付きdiv）を監視対象に
+            const anchorDivs = contentContainer.querySelectorAll<HTMLElement>(
+                ".notion-header-anchor[id]",
+            );
+            anchorDivs.forEach((el) => observer.observe(el));
 
             // ハッシュフラグメントの変更を監視
             const handleHashChange = () => {
                 handleHashFragment();
             };
-
             window.addEventListener("hashchange", handleHashChange);
 
-            // クリーンアップ関数を設定
+            // クリーンアップ関数
             return () => {
                 observer.disconnect();
                 window.removeEventListener("hashchange", handleHashChange);
             };
         }, 500); // 500ms待つ
-
         return () => clearTimeout(timer);
-    }, []); // 依存配列を空にして、初回のみ実行
+    }, []);
 
     /**
      * 見出しクリック時の処理
      * スクロールとURL更新を行う
      */
     const handleHeadingClick = (id: string) => {
-        // 見出しまでスクロール
+        // notion-header-anchor（id付きdiv）までスクロール
         const element = document.getElementById(id);
         if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
+            const y =
+                element.getBoundingClientRect().top + window.scrollY - 630;
+            window.scrollTo({ top: y, behavior: "smooth" });
         }
-
         // URLを更新してリンクとして機能させる
         const url = new URL(window.location.href);
         url.hash = id;

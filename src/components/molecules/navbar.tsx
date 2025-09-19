@@ -22,8 +22,8 @@ const navLinks: NavLink[] = [
 export const Navbar = () => {
     const pathname = usePathname();
     return (
-        <nav>
-            <ul className="flex gap-16 text-lg">
+        <nav className="w-[20rem]">
+            <ul className="flex justify-between text-lg">
                 {navLinks.map((link) => {
                     const isActive = pathname === link.href;
                     const halfActive = pathname.startsWith(link.href);
