@@ -677,9 +677,9 @@ details.notion-toggle .notion-h {
     display: block;
     object-fit: cover;
     width: 100%;
-    height: 30vh !important;
-    min-height: 30vh !important;
-    max-height: 30vh !important;
+    height: 30vh;
+    min-height: 30vh;
+    max-height: 30vh;
     padding: 0;
 }
 
@@ -810,7 +810,8 @@ details.notion-toggle .notion-h {
 .notion-page-icon {
     font-family:
         "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji,
-        "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", EmojiSymbols;
+        "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", EmojiSymbols,
+        sans-serif;
     font-size: 1.1em;
     fill: var(--fg-color-6);
     color: var(--fg-color-icon);

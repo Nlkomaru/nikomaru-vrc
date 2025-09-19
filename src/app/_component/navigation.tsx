@@ -29,7 +29,9 @@ export const Navigation = () => {
             ),
         );
         return () => {
-            timeouts.forEach((id) => clearTimeout(id));
+            timeouts.forEach((id) => {
+                clearTimeout(id);
+            });
         };
     }, [links.map]);
 
