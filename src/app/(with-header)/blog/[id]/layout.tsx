@@ -33,7 +33,7 @@ export async function generateMetadata({
                   description,
                   images: [image],
                   siteName: "Nikomaru - VRChat Activities and Experiences",
-                  url: `https://vrc.nikomaru.dev/blog/${post.id}`,
+                  url: `https://vrc.nikomaru.dev/blog/${post?.id ?? id}`,
               }
             : undefined,
         twitter: image
