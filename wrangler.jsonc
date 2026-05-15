@@ -15,6 +15,9 @@
     "observability": {
         "enabled": true
     },
+    "vars": {
+        "TABLE_URL": "https://notion-api-worker.nikomaru.workers.dev/v1/table/270a6d8e271d8095a897d4784ee5c640"
+    },
     "routes": [
         {
             "pattern": "vrc.nikomaru.dev",
