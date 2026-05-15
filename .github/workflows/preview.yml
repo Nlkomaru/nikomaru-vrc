@@ -10,8 +10,6 @@ permissions:
 
 jobs:
   deploy:
-    env:
-      TABLE_URL: ${{ secrets.TABLE_URL }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -51,10 +49,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_KEY }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: versions upload --message "Deployed pages by GitHub Actions branch ${{ github.ref_name }}"
-          secrets: |
-            TABLE_URL
-        env: 
-          TABLE_URL: ${{ secrets.TABLE_URL }}
           
       - name: Create comment file
         id: create-comment-file

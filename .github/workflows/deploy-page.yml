@@ -12,8 +12,6 @@ permissions:
 
 jobs:
   deploy:
-    env:
-      TABLE_URL: ${{ secrets.TABLE_URL }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -52,7 +50,3 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_KEY }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          secrets: |
-            TABLE_URL
-        env: 
-          TABLE_URL: ${{ secrets.TABLE_URL }}
