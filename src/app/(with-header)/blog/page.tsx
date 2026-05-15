@@ -17,7 +17,8 @@ export default async function BlogIndexPage() {
             new Date(a.created_at ?? "").getTime(),
     );
     json = json.filter(
-        (post: PostMeta) => !post.description?.startsWith("_hidden"),
+        (post: PostMeta) =>
+            !post.hidden && !post.description?.startsWith("_hidden"),
     );
 
     return (

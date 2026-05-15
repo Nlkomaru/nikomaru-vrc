@@ -1,5 +1,6 @@
 import { redirect as redirectTo } from "next/navigation";
 import { NotionAPI } from "notion-client";
+import { normalizeRecordMap } from "@/lib/notion-record-map";
 import { Render } from "./_component/render";
 import { ScrollToTop } from "./_component/toc/scroll-to-top";
 import { TOC } from "./_component/toc/toc";
@@ -16,7 +17,7 @@ export default async function Page({
         return redirectTo(redirect.to);
     }
     const notion = new NotionAPI();
-    const recordMap = await notion.getPage(slug);
+    const recordMap = normalizeRecordMap(await notion.getPage(slug));
 
     return (
         <div className="flex justify-between">

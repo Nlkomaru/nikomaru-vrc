@@ -89,7 +89,6 @@ export function useTOC() {
                 observer.observe(el);
             });
 
-
             // ハッシュフラグメントの変更を監視
             const handleHashChange = () => {
                 handleHashFragment();
