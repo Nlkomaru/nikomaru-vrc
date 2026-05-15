@@ -21,7 +21,7 @@ export function PostCard({ post }: { post: PostMeta }) {
                         className="text-lg font-medium font-regular overflow-hidden text-ellipsis whitespace-nowrap"
                         title={post.title ?? post.id}
                     >
-                        {post.title ?? post.slug}
+                        {post.title ?? post.id}
                     </h3>
                     {post.description ? (
                         <p

@@ -2,7 +2,7 @@
 # プロンプトファイルを結合して複数の .clinerules ファイルを生成するスクリプト
 
 RULES_DIR=".cline/rules"
-OUTPUT_FILES=".cursorrules .github/copilot-instructions.md"
+OUTPUT_FILES="AGENTS.md"
 
 END="それでは、指示に従ってタスクを遂行してください。
 

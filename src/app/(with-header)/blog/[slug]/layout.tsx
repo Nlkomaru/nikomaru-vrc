@@ -3,15 +3,23 @@ import type { Metadata } from "next";
 import type { PostMeta } from "../_component/types";
 import { redirectMap } from "./redirect";
 
+function toAbsoluteUrl(url: string) {
+    return new URL(url, "https://vrc.nikomaru.dev").toString();
+}
+
 export async function generateMetadata({
     params,
 }: {
     params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-    const { env } = getCloudflareContext();
+    let tableUrl = process.env.TABLE_URL;
+    if (!tableUrl) {
+        const { env } = await getCloudflareContext({ async: true });
+        tableUrl = env.TABLE_URL;
+    }
 
     const { slug } = await params;
-    const data = await fetch(`${env.TABLE_URL}`).then((res) =>
+    const data = await fetch(`${tableUrl}`).then((res) =>
         res.json<PostMeta[]>(),
     );
     const redirect = redirectMap.find((redirect) => redirect.from === slug);
@@ -23,6 +31,7 @@ export async function generateMetadata({
     const image =
         post?.thumbnail?.[0]?.url ??
         "/0197c5ed-de70-74fb-ad2c-7a6bb2c2240f.webp";
+    const absoluteImage = toAbsoluteUrl(image);
     const description = post?.description;
 
     return {
@@ -34,7 +43,7 @@ export async function generateMetadata({
                   description,
                   images: [image],
                   siteName: "Nikomaru - VRChat Activities and Experiences",
-                  url: `https://vrc.nikomaru.dev/blog/${post?.slug}`,
+                  url: `https://vrc.nikomaru.dev/blog/${post?.id ?? slug}`,
               }
             : undefined,
         twitter: image
@@ -43,7 +52,7 @@ export async function generateMetadata({
                   site: "https://vrc.nikomaru.dev",
                   title: title,
                   description,
-                  images: [`https://vrc.nikomaru.dev${image}`],
+                  images: [absoluteImage],
               }
             : undefined,
     } satisfies Metadata;
