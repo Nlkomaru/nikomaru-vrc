@@ -1,4 +1,4 @@
-import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { env } from "cloudflare:workers";
 import type { Metadata } from "next";
 import type { PostMeta } from "../_component/types";
 import { redirectMap } from "./redirect";
@@ -12,16 +12,14 @@ export async function generateMetadata({
 }: {
     params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-    let tableUrl = process.env.TABLE_URL;
-    if (!tableUrl) {
-        const { env } = await getCloudflareContext({ async: true });
-        tableUrl = env.TABLE_URL;
-    }
+    // .env / .dev.vars を優先し、Workers 上では wrangler.jsonc の vars を使う
+    const tableUrl = process.env.TABLE_URL ?? env.TABLE_URL;
 
     const { slug } = await params;
-    const data = await fetch(`${tableUrl}`).then((res) =>
-        res.json<PostMeta[]>(),
-    );
+    const res0 = await fetch(`${tableUrl}`);
+    const text0 = await res0.text();
+    console.error("DEBUG_META", JSON.stringify({ tableUrl, status: res0.status, body: text0.slice(0, 200) }));
+    const data = JSON.parse(text0) as PostMeta[];
     const redirect = redirectMap.find((redirect) => redirect.from === slug);
 
     const post = redirect

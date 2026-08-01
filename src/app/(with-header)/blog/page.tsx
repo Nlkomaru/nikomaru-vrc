@@ -1,13 +1,10 @@
-import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { env } from "cloudflare:workers";
 import { PostCard } from "./_component/post-card";
 import type { PostMeta } from "./_component/types";
 
 export default async function BlogIndexPage() {
-    let tableUrl = process.env.TABLE_URL;
-    if (!tableUrl) {
-        const { env } = await getCloudflareContext({ async: true });
-        tableUrl = env.TABLE_URL;
-    }
+    // .env / .dev.vars を優先し、Workers 上では wrangler.jsonc の vars を使う
+    const tableUrl = process.env.TABLE_URL ?? env.TABLE_URL;
 
     const res = await fetch(`${tableUrl}`);
     let json = await res.json<PostMeta[]>();

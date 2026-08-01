@@ -5,14 +5,22 @@
 {
     "$schema": "node_modules/wrangler/config-schema.json",
     "name": "nikomaru-vrc",
-    "main": ".open-next/worker.js",
-    "compatibility_date": "2025-03-01",
-    "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+    // Workers Cache (`cache.enabled`) を使うため、比較的新しい互換性日付が必要
+    "compatibility_date": "2026-07-01",
+    "compatibility_flags": ["nodejs_compat"],
+    // vinext が提供するルーター選択済みの fetch ハンドラをエントリポイントにする
+    "main": "vinext/server/fetch-handler",
     "assets": {
-        "binding": "ASSETS",
-        "directory": ".open-next/assets"
+        // vinext build は静的アセットを dist/client に出力する
+        "directory": "dist/client",
+        "not_found_handling": "none",
+        "binding": "ASSETS"
     },
     "observability": {
+        "enabled": true
+    },
+    // ISR / ページキャッシュのバックエンドとして Workers Cache を利用する
+    "cache": {
         "enabled": true
     },
     "vars": {
@@ -29,29 +37,4 @@
      * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
      */
     // "placement": { "mode": "smart" }
-    /**
-     * Bindings
-     * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
-     * databases, object storage, AI inference, real-time communication and more.
-     * https://developers.cloudflare.com/workers/runtime-apis/bindings/
-     */
-    /**
-     * Environment Variables
-     * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
-     */
-    // "vars": { "MY_VARIABLE": "production_value" }
-    /**
-     * Note: Use secrets to store sensitive data.
-     * https://developers.cloudflare.com/workers/configuration/secrets/
-     */
-    /**
-     * Static Assets
-     * https://developers.cloudflare.com/workers/static-assets/binding/
-     */
-    // "assets": { "directory": "./public/", "binding": "ASSETS" }
-    /**
-     * Service Bindings (communicate between multiple Workers)
-     * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
-     */
-    // "services": [{ "binding": "MY_SERVICE", "service": "my-service" }]
 }
