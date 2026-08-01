@@ -52,7 +52,7 @@ jobs:
         with:
           access_token: ${{ secrets.NIKOMARU_BITWARDEN_SECRET_MANAGER_ACCESS_TOKEN }}
           secrets: |
-            5bde1b52-4bc6-4399-bc82-b49900de6e7a > CLOUDFLARE_API_KEY
+            f1bf4fa4-0288-4a31-b28b-b499013acdce > CLOUDFLARE_API_KEY
             2bad9e23-82af-4fba-b514-b49900e1632f > CLOUDFLARE_ACCOUNT_ID
 
       - name: Expose Bitwarden secrets as step outputs
