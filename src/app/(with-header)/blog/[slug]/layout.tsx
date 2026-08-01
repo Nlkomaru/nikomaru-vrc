@@ -12,8 +12,8 @@ export async function generateMetadata({
 }: {
     params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-    // .env / .dev.vars を優先し、Workers 上では wrangler.jsonc の vars を使う
-    const tableUrl = process.env.TABLE_URL ?? env.TABLE_URL;
+    // .env / .dev.vars を優先し、Workers 上では Cloudflare Secrets Store のバインディングを使う
+    const tableUrl = process.env.TABLE_URL ?? (await env.TABLE_URL.get());
 
     const { slug } = await params;
     const res0 = await fetch(`${tableUrl}`);

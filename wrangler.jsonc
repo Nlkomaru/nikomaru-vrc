@@ -23,9 +23,15 @@
     "cache": {
         "enabled": true
     },
-    "vars": {
-        "TABLE_URL": "https://notion-api-worker.nikomaru.workers.dev/v1/table/270a6d8e271d8095a897d4784ee5c640"
-    },
+    // TABLE_URL は Cloudflare Secrets Store(nikomaru プロジェクト)管理に移行済み。
+    // 値は BSM nikomaru: nikomaru-vrc/TABLE_URL と同じもの。
+    "secrets_store_secrets": [
+        {
+            "binding": "TABLE_URL",
+            "store_id": "d36d5a11ea07462c83bb21a0e9ccb811",
+            "secret_name": "nikomaru_vrc_TABLE_URL"
+        }
+    ],
     "routes": [
         {
             "pattern": "vrc.nikomaru.dev",
