@@ -1,0 +1,6 @@
+# Load .env.development* files when running `wrangler dev`
+NEXTJS_ENV=development
+# TABLE_URL は Cloudflare Secrets Store バインディング(wrangler.jsonc の secrets_store_secrets)経由。
+# .dev.vars は Secrets Store バインディングのローカル値を提供できないため、ここには置かない。
+# ローカル開発では .env の TABLE_URL(process.env.TABLE_URL)が優先して使われる。
+# BSM nikomaru: nikomaru-vrc/TABLE_URL / CF Store: nikomaru_vrc_TABLE_URL

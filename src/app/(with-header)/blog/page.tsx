@@ -1,13 +1,10 @@
-import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { env } from "cloudflare:workers";
 import { PostCard } from "./_component/post-card";
 import type { PostMeta } from "./_component/types";
 
 export default async function BlogIndexPage() {
-    let tableUrl = process.env.TABLE_URL;
-    if (!tableUrl) {
-        const { env } = await getCloudflareContext({ async: true });
-        tableUrl = env.TABLE_URL;
-    }
+    // .env / .dev.vars を優先し、Workers 上では Cloudflare Secrets Store のバインディングを使う
+    const tableUrl = process.env.TABLE_URL ?? (await env.TABLE_URL.get());
 
     const res = await fetch(`${tableUrl}`);
     let json = await res.json<PostMeta[]>();

@@ -42,11 +42,32 @@ jobs:
         run: pnpm install
 
       - name: Build pages
-        run: pnpm run pages:build
-        
+        run: pnpm run build
+
+      # CLOUDFLARE_API_KEY / CLOUDFLARE_ACCOUNT_ID は BSM(nikomaru プロジェクト)管理に移行済み。
+      # bitwarden/sm-action@v2 はジョブ内 env にしか値を出さず(steps.*.outputs を持たない)、
+      # 次の wrangler-action は with: (式コンテキスト)でしか値を受け取れないため、
+      # 一度 GITHUB_OUTPUT に書き出して式コンテキストから参照できるようにする。
+      # sm-action がマスク登録済みの値なので、ログに出しても伏せ字になる。
+      - name: Get secrets from Bitwarden Secrets Manager
+        uses: bitwarden/sm-action@v2
+        with:
+          access_token: ${{ secrets.NIKOMARU_BITWARDEN_SECRET_MANAGER_ACCESS_TOKEN }}
+          secrets: |
+            f1bf4fa4-0288-4a31-b28b-b499013acdce > CLOUDFLARE_API_KEY
+            2bad9e23-82af-4fba-b514-b49900e1632f > CLOUDFLARE_ACCOUNT_ID
+
+      - name: Expose Bitwarden secrets as step outputs
+        id: bws
+        run: |
+          echo "cloudflare_api_key=$CLOUDFLARE_API_KEY" >> "$GITHUB_OUTPUT"
+          echo "cloudflare_account_id=$CLOUDFLARE_ACCOUNT_ID" >> "$GITHUB_OUTPUT"
+
       - name: Deploy pages
         id: deploy-pages
         uses: cloudflare/wrangler-action@v3
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_KEY }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ steps.bws.outputs.cloudflare_api_key }}
+          accountId: ${{ steps.bws.outputs.cloudflare_account_id }}
+          # vinext build が生成する設定でデプロイする(ルートの wrangler.jsonc は開発用)
+          command: deploy --config dist/server/wrangler.json

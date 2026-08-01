@@ -9,10 +9,6 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
-
 # production
 /build
 
@@ -35,8 +31,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# OpenNext
-/.open-next
+# vinext / vite
+/dist/
+.vinext/
+.wrangler/
 
 src/app/(with-header)/blog/content.json
 

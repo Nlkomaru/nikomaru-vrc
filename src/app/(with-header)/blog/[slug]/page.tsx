@@ -17,7 +17,13 @@ export default async function Page({
         return redirectTo(redirect.to);
     }
     const notion = new NotionAPI();
-    const recordMap = normalizeRecordMap(await notion.getPage(slug));
+    let recordMap;
+    try {
+        recordMap = normalizeRecordMap(await notion.getPage(slug));
+    } catch (e) {
+        console.error("DEBUG_NOTION_ERROR", e instanceof Error ? `${e.name}: ${e.message}\n${e.stack}` : String(e));
+        throw e;
+    }
 
     return (
         <div className="flex justify-between">
