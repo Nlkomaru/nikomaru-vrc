@@ -40,7 +40,7 @@ jobs:
         run: pnpm install
 
       - name: Build pages
-        run: pnpm run pages:build
+        run: pnpm run build
 
       # CLOUDFLARE_API_KEY / CLOUDFLARE_ACCOUNT_ID は BSM(nikomaru プロジェクト)管理に移行済み。
       # bitwarden/sm-action@v2 はジョブ内 env にしか値を出さず(steps.*.outputs を持たない)、
@@ -67,7 +67,7 @@ jobs:
         with:
           apiToken: ${{ steps.bws.outputs.cloudflare_api_key }}
           accountId: ${{ steps.bws.outputs.cloudflare_account_id }}
-          command: versions upload --message "Deployed pages by GitHub Actions branch ${{ github.ref_name }}"
+          command: versions upload --config dist/server/wrangler.json --message "Deployed pages by GitHub Actions branch ${{ github.ref_name }}"
           
       - name: Create comment file
         id: create-comment-file
