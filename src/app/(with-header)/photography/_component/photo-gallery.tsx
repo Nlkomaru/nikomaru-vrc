@@ -88,10 +88,8 @@ export function PhotoGallery({ photos }: PhotoGalleryProps) {
                     <Dialog.Overlay className="fixed inset-0 z-50 bg-black/72 backdrop-blur-sm" />
                     <Dialog.Content
                         className="fixed inset-0 z-50 flex items-center justify-center p-4 focus:outline-none"
-                        onPointerDown={(event) => {
-                            if (event.target === event.currentTarget) {
-                                setSelectedPhoto(null);
-                            }
+                        onPointerDown={() => {
+                            setSelectedPhoto(null);
                         }}
                     >
                         <Dialog.Title className="sr-only">

@@ -1,6 +1,8 @@
 import { env } from "cloudflare:workers";
 import { PostCard } from "./_component/post-card";
 import type { PostMeta } from "./_component/types";
+// The post list reads a Worker binding, so client-side navigation must request a fresh RSC payload.
+export const dynamic = "force-dynamic";
 
 export default async function BlogIndexPage() {
     // .env / .dev.vars を優先し、Workers 上では Cloudflare Secrets Store のバインディングを使う
