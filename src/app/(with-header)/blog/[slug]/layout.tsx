@@ -3,6 +3,9 @@ import { getTableUrl } from "@/lib/table-url";
 import type { PostMeta } from "../_component/types";
 import { redirectMap } from "./redirect";
 
+// Post metadata is fetched through a Worker binding and cannot be prerendered.
+export const dynamic = "force-dynamic";
+
 function toAbsoluteUrl(url: string) {
     return new URL(url, "https://vrc.nikomaru.dev").toString();
 }
