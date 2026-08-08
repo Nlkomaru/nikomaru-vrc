@@ -32,6 +32,20 @@
             "secret_name": "nikomaru_vrc_TABLE_URL"
         }
     ],
+    // Dragonfly の公開用ポートフォリオ写真を、メタデータ (D1) と実体 (R2) から読む。
+    "d1_databases": [
+        {
+            "binding": "DRAGONFLY_DB",
+            "database_name": "dragonfly",
+            "database_id": "6d3b4492-c258-4ade-b97d-50d73563ed5a"
+        }
+    ],
+    "r2_buckets": [
+        {
+            "binding": "DRAGONFLY_PHOTOS",
+            "bucket_name": "dragonfly-photos"
+        }
+    ],
     "routes": [
         {
             "pattern": "vrc.nikomaru.dev",
