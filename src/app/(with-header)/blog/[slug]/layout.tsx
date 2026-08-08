@@ -1,5 +1,5 @@
-import { env } from "cloudflare:workers";
 import type { Metadata } from "next";
+import { getTableUrl } from "@/lib/table-url";
 import type { PostMeta } from "../_component/types";
 import { redirectMap } from "./redirect";
 
@@ -12,8 +12,8 @@ export async function generateMetadata({
 }: {
     params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-    // .env / .dev.vars を優先し、空文字なら Workers の Secrets Store を使う。
-    const tableUrl = process.env.TABLE_URL || (await env.TABLE_URL.get());
+    // ローカル開発時だけ .dev.vars を使い、デプロイ済み Worker は Secrets Store を必ず参照する。
+    const tableUrl = await getTableUrl();
 
     const { slug } = await params;
     const res0 = await fetch(`${tableUrl}`);
