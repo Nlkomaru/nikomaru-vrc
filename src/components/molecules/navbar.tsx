@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 // ナビゲーションリンクの配列
@@ -29,7 +28,7 @@ export const Navbar = () => {
                     const halfActive = pathname.startsWith(link.href);
                     return (
                         <li key={link.href}>
-                            <Link
+                            <a
                                 href={link.href}
                                 className={`
                                     relative pb-1 transition-colors duration-200
@@ -47,7 +46,7 @@ export const Navbar = () => {
                                 {(isActive || halfActive) && (
                                     <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gray-400 px-5 rounded-sm" />
                                 )}
-                            </Link>
+                            </a>
                         </li>
                     );
                 })}
