@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { PostMeta } from "./types";
 
@@ -8,13 +9,11 @@ export function PostCard({ post }: { post: PostMeta }) {
         <Link href={`/blog/${post.id}`}>
             <article className="h-full rounded-md overflow-hidden bg-white/5 border border-border">
                 <div className="relative w-full aspect-[16/9]">
-                    {/* biome-ignore lint/performance/noImgElement: Notion renders these remote thumbnails directly, avoiding edge image-optimizer failures. */}
-                    <img
+                    <Image
                         src={img}
                         alt={post.title ?? post.id}
-                        loading="lazy"
-                        decoding="async"
-                        className="size-full object-cover"
+                        fill
+                        className="object-cover"
                     />
                 </div>
                 <div className="p-4 bg-white/50 backdrop-blur-sm">
