@@ -16,6 +16,8 @@ export type GalleryPhoto = {
 type PhotoGalleryProps = {
     photos: GalleryPhoto[];
 };
+// The dialog state re-renders every gallery item; keep BlurHash decoding to one pass per hash.
+const blurhashBackgroundCache = new Map<string, CSSProperties | null>();
 
 function getBlurhashBackground(
     blurhash: string | null,
@@ -24,15 +26,26 @@ function getBlurhashBackground(
         return undefined;
     }
 
+    const cached = blurhashBackgroundCache.get(blurhash);
+    if (cached) {
+        return cached;
+    }
+    if (cached === null) {
+        return undefined;
+    }
+
     try {
-        return {
+        const background = {
             backgroundImage: blurhashToCssGradientString(blurhash),
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
-        };
+        } as const;
+        blurhashBackgroundCache.set(blurhash, background);
+        return background;
     } catch {
         // A malformed legacy hash must not prevent the published image from rendering.
+        blurhashBackgroundCache.set(blurhash, null);
         return undefined;
     }
 }
