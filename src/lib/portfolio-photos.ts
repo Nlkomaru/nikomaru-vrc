@@ -34,17 +34,16 @@ export async function listPortfolioPhotos(): Promise<PortfolioPhoto[]> {
 /** Resolves an image object only while the corresponding photo keeps its portfolio tag. */
 export async function getPortfolioPhotoObject(
     photoId: string,
-    variant: "image" | "thumbnail",
 ): Promise<R2ObjectBody | null> {
     const photo = await env.DRAGONFLY_DB.prepare(
-        `SELECT CASE WHEN ? = 'thumbnail' THEN COALESCE(p.thumb_key, p.r2_key) ELSE p.r2_key END AS objectKey
+        `SELECT p.r2_key AS objectKey
          FROM photos AS p
          INNER JOIN photo_tags AS pt ON pt.photo_id = p.id
          INNER JOIN tags AS t ON t.id = pt.tag_id
          WHERE p.id = ? AND t.name = ?
          LIMIT 1`,
     )
-        .bind(variant, photoId, PORTFOLIO_TAG)
+        .bind(photoId, PORTFOLIO_TAG)
         .first<PortfolioPhotoObjectRow>();
 
     return photo ? env.DRAGONFLY_PHOTOS.get(photo.objectKey) : null;

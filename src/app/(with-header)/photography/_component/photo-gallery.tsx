@@ -10,7 +10,6 @@ export type GalleryPhoto = {
     width: number;
     height: number;
     blurhash: string | null;
-    thumbnailSrc: string;
     imageSrc: string;
 };
 
@@ -61,9 +60,9 @@ export function PhotoGallery({ photos }: PhotoGalleryProps) {
                                 className="relative block aspect-square overflow-hidden"
                                 style={getBlurhashBackground(photo.blurhash)}
                             >
-                                {/* biome-ignore lint/performance/noImgElement: The R2 thumbnail is already AVIF and must retain native lazy loading. */}
+                                {/* biome-ignore lint/performance/noImgElement: The R2 image is already AVIF and must retain native lazy loading. */}
                                 <img
-                                    src={photo.thumbnailSrc}
+                                    src={photo.imageSrc}
                                     alt=""
                                     width={photo.width}
                                     height={photo.height}
@@ -87,12 +86,19 @@ export function PhotoGallery({ photos }: PhotoGalleryProps) {
             >
                 <Dialog.Portal>
                     <Dialog.Overlay className="fixed inset-0 z-50 bg-black/72 backdrop-blur-sm" />
-                    <Dialog.Content className="fixed inset-0 z-50 flex items-center justify-center p-4 focus:outline-none">
+                    <Dialog.Content
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 focus:outline-none"
+                        onPointerDown={(event) => {
+                            if (event.target === event.currentTarget) {
+                                setSelectedPhoto(null);
+                            }
+                        }}
+                    >
                         <Dialog.Title className="sr-only">
                             Expanded portfolio photograph
                         </Dialog.Title>
                         <Dialog.Description className="sr-only">
-                            Click outside the photograph or use the close button
+                            Click the surrounding area or use the close button
                             to return to the gallery.
                         </Dialog.Description>
                         <Dialog.Close
@@ -110,10 +116,7 @@ export function PhotoGallery({ photos }: PhotoGalleryProps) {
                                     width={selectedPhoto.width}
                                     height={selectedPhoto.height}
                                     decoding="async"
-                                    className="max-h-[calc(100dvh-2rem)] max-w-[calc(100vw-2rem)] object-contain shadow-2xl"
-                                    style={getBlurhashBackground(
-                                        selectedPhoto.blurhash,
-                                    )}
+                                    className="size-full object-contain shadow-2xl"
                                 />
                             </>
                         ) : null}
