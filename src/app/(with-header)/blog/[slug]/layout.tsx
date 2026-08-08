@@ -12,14 +12,12 @@ export async function generateMetadata({
 }: {
     params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-    // .env / .dev.vars を優先し、Workers 上では Cloudflare Secrets Store のバインディングを使う
-    const tableUrl = process.env.TABLE_URL ?? (await env.TABLE_URL.get());
+    // .env / .dev.vars を優先し、空文字なら Workers の Secrets Store を使う。
+    const tableUrl = process.env.TABLE_URL || (await env.TABLE_URL.get());
 
     const { slug } = await params;
     const res0 = await fetch(`${tableUrl}`);
-    const text0 = await res0.text();
-    console.error("DEBUG_META", JSON.stringify({ tableUrl, status: res0.status, body: text0.slice(0, 200) }));
-    const data = JSON.parse(text0) as PostMeta[];
+    const data = await res0.json<PostMeta[]>();
     const redirect = redirectMap.find((redirect) => redirect.from === slug);
 
     const post = redirect
