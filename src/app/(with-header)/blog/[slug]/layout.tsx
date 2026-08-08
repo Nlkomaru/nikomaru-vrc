@@ -1,7 +1,10 @@
-import { env } from "cloudflare:workers";
 import type { Metadata } from "next";
+import { getTableUrl } from "@/lib/table-url";
 import type { PostMeta } from "../_component/types";
 import { redirectMap } from "./redirect";
+
+// Post metadata is fetched through a Worker binding and cannot be prerendered.
+export const dynamic = "force-dynamic";
 
 function toAbsoluteUrl(url: string) {
     return new URL(url, "https://vrc.nikomaru.dev").toString();
@@ -12,14 +15,12 @@ export async function generateMetadata({
 }: {
     params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-    // .env / .dev.vars を優先し、Workers 上では Cloudflare Secrets Store のバインディングを使う
-    const tableUrl = process.env.TABLE_URL ?? (await env.TABLE_URL.get());
+    // ローカル開発時だけ .dev.vars を使い、デプロイ済み Worker は Secrets Store を必ず参照する。
+    const tableUrl = await getTableUrl();
 
     const { slug } = await params;
     const res0 = await fetch(`${tableUrl}`);
-    const text0 = await res0.text();
-    console.error("DEBUG_META", JSON.stringify({ tableUrl, status: res0.status, body: text0.slice(0, 200) }));
-    const data = JSON.parse(text0) as PostMeta[];
+    const data = await res0.json<PostMeta[]>();
     const redirect = redirectMap.find((redirect) => redirect.from === slug);
 
     const post = redirect

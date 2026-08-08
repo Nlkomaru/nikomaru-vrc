@@ -2,7 +2,6 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { Menu, XIcon } from "lucide-react";
 
-import { useRouter } from "next/navigation";
 import type React from "react";
 import { useState } from "react";
 
@@ -27,13 +26,6 @@ const NAVIGATION_ITEMS = [
 
 export function MenuDrawer({ className }: React.ComponentProps<"div">) {
     const [open, setOpen] = useState(false);
-    const router = useRouter();
-
-    // リンククリック時の処理
-    const handleLinkClick = (url: string) => {
-        setOpen(false); // ダイアログを閉じる
-        router.push(url); // ページ遷移
-    };
 
     return (
         <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -60,11 +52,7 @@ export function MenuDrawer({ className }: React.ComponentProps<"div">) {
 
                         <ul className="flex flex-col justify-center items-center gap-10">
                             {NAVIGATION_ITEMS.map((item) => (
-                                <MenuItem
-                                    key={item.url}
-                                    item={item}
-                                    onClick={() => handleLinkClick(item.url)}
-                                />
+                                <MenuItem key={item.url} item={item} />
                             ))}
                         </ul>
                     </div>
@@ -74,16 +62,10 @@ export function MenuDrawer({ className }: React.ComponentProps<"div">) {
     );
 }
 
-const MenuItem = ({
-    item,
-    onClick,
-}: {
-    item: (typeof NAVIGATION_ITEMS)[number];
-    onClick: () => void;
-}) => {
+const MenuItem = ({ item }: { item: (typeof NAVIGATION_ITEMS)[number] }) => {
     return (
         <li className="flex flex-col items-center self-stretch">
-            <button type="button" className="text-center" onClick={onClick}>
+            <a href={item.url} className="text-center">
                 <div>
                     <div className="self-stretch text-center text-base font-medium leading-[22px]">
                         {item.name}
@@ -92,7 +74,7 @@ const MenuItem = ({
                         {item.label}
                     </div>
                 </div>
-            </button>
+            </a>
         </li>
     );
 };
