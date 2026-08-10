@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { BgImage } from "./_component/bg-image";
-import { Header } from "./_component/header";
+import { HomeHeader } from "./(with-header)/_components/home-header";
 
 export default function Home() {
     const [bgReady, setBgReady] = useState(false);
     return (
         <>
             <BgImage onLoaded={() => setBgReady(true)} />
-            {bgReady ? <Header /> : null}
+            {bgReady ? <HomeHeader /> : null}
         </>
     );
 }

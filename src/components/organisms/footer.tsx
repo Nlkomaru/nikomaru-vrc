@@ -1,5 +1,4 @@
 import { Github, MessageSquareMore, Twitter } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 export const Footer = () => (
@@ -8,14 +7,11 @@ export const Footer = () => (
             <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6 md:gap-0">
                 {/* ロゴと説明 */}
                 <div className="flex flex-col gap-3 items-center md:items-start">
-                    <Link href="/">
-                        <Image
-                            src="/logo.svg"
-                            width={160}
-                            height={45}
-                            className="md:w-[180px] md:h-[50px]"
-                            alt={"Nikomaru vrchat logo"}
-                        />
+                    <Link
+                        href="/"
+                        className="text-xl font-medium tracking-tight text-gray-900"
+                    >
+                        Nikomaru VRChat
                     </Link>
                 </div>
 
