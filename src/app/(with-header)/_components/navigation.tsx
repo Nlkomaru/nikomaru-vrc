@@ -11,6 +11,13 @@ import {
 
 const NAVIGATION_LINKS = ["photography", "blog", "about"] as const;
 
+// 表示名だけを短くする。遷移先は /photography のまま。
+const NAVIGATION_LABELS: Record<(typeof NAVIGATION_LINKS)[number], string> = {
+    photography: "PHOTO",
+    blog: "BLOG",
+    about: "ABOUT",
+};
+
 export const Navigation = () => {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [visibleCount, setVisibleCount] = useState(0);
@@ -64,7 +71,7 @@ export const Navigation = () => {
                     className="my-2 w-fit"
                 >
                     <Link href={`/${link}`} className="block">
-                        {link.toUpperCase()}
+                        {NAVIGATION_LABELS[link]}
                     </Link>
                 </motion.div>
             ))}

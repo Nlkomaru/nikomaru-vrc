@@ -100,7 +100,7 @@ export function PhotoGallery({ photos }: PhotoGalleryProps) {
                 <Dialog.Portal>
                     <Dialog.Overlay className="fixed inset-0 z-50 bg-black/72 backdrop-blur-sm" />
                     <Dialog.Content
-                        className="fixed inset-0 z-50 flex items-center justify-center p-4 focus:outline-none"
+                        className="fixed inset-0 z-50 flex items-center justify-center focus:outline-none"
                         onPointerDown={() => {
                             setSelectedPhoto(null);
                         }}
