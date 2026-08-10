@@ -9,42 +9,38 @@ import {
     HOVER_DIM_OPACITY,
 } from "./animation-constants";
 
+const NAVIGATION_LINKS = ["photography", "blog", "about"] as const;
+
 export const Navigation = () => {
-    // Define links to show in the navigation
-    const links = ["photography", "blog", "about"] as const;
-
-    // Track which link index is being hovered to dim others
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [visibleCount, setVisibleCount] = useState(0);
 
-    // Number of links currently revealed (progressively increases)
-    const [visibleCount, setVisibleCount] = useState<number>(0);
-
-    // Reveal links one-by-one after the component mounts
     useEffect(() => {
-        const intervalMs = ANIMATION_TIMING.navStaggerSec * 1000;
-        const timeouts = links.map((_, index) =>
+        const timeouts = NAVIGATION_LINKS.map((_, index) =>
             setTimeout(
-                () => setVisibleCount((prev) => Math.max(prev, index + 1)),
-                index * intervalMs,
+                () => setVisibleCount((count) => Math.max(count, index + 1)),
+                index * ANIMATION_TIMING.navStaggerSec * 1000,
             ),
         );
+
         return () => {
-            timeouts.forEach((id) => {
-                clearTimeout(id);
+            timeouts.forEach((timeoutId) => {
+                clearTimeout(timeoutId);
             });
         };
-    }, [links.map]);
-
-    const visibleLinks = links.slice(0, visibleCount);
+    }, []);
 
     return (
-        <div className="flex flex-col mt-12 text-xl md:text-2xl text-white font-light w-fit">
-            {visibleLinks.map((link, i) => (
+        <nav
+            aria-label="メインナビゲーション"
+            className="mt-12 flex w-fit flex-col text-xl font-light text-white md:text-2xl"
+        >
+            {NAVIGATION_LINKS.slice(0, visibleCount).map((link, index) => (
                 <motion.div
                     key={link}
                     initial={{ opacity: 0, y: 14 }}
                     animate={
-                        hoveredIndex === null || hoveredIndex === i
+                        hoveredIndex === null || hoveredIndex === index
                             ? {
                                   opacity: 1,
                                   y: 0,
@@ -63,15 +59,15 @@ export const Navigation = () => {
                                   },
                               }
                     }
-                    onMouseEnter={() => setHoveredIndex(i)}
+                    onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
                     className="my-2 w-fit"
                 >
-                    <Link href={`/${link}`} className="w-full h-full">
+                    <Link href={`/${link}`} className="block">
                         {link.toUpperCase()}
                     </Link>
                 </motion.div>
             ))}
-        </div>
+        </nav>
     );
 };
