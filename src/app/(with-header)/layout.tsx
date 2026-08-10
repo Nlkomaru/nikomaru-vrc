@@ -1,7 +1,7 @@
 import type React from "react";
 import { Footer } from "@/components/organisms/footer";
-import { Header } from "@/components/organisms/header";
 import PastelBlobs from "@/components/organisms/pastel-blobs";
+import { Header } from "./_components/header";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
