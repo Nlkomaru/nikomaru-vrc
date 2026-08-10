@@ -10,21 +10,27 @@ export const CHARACTER_REVEAL = {
 type AnimatedTextProps = {
     text: string;
     delaySec?: number;
+    revealDurationMultiplier?: number;
 };
 
-const characterMotion = {
+const createCharacterMotion = (revealDurationMultiplier: number) => ({
     hidden: { opacity: 0, y: 8 },
     show: {
         opacity: 1,
         y: 0,
         transition: {
-            duration: CHARACTER_REVEAL.durationSec,
+            duration: CHARACTER_REVEAL.durationSec * revealDurationMultiplier,
             ease: "easeOut" as const,
         },
     },
-};
+});
 
-export const AnimatedText = ({ text, delaySec = 0 }: AnimatedTextProps) => {
+export const AnimatedText = ({
+    text,
+    delaySec = 0,
+    revealDurationMultiplier = 1,
+}: AnimatedTextProps) => {
+    const characterMotion = createCharacterMotion(revealDurationMultiplier);
     const characterCounts = new Map<string, number>();
 
     return (
@@ -39,7 +45,9 @@ export const AnimatedText = ({ text, delaySec = 0 }: AnimatedTextProps) => {
                     opacity: 1,
                     transition: {
                         delayChildren: delaySec,
-                        staggerChildren: CHARACTER_REVEAL.staggerSec,
+                        staggerChildren:
+                            CHARACTER_REVEAL.staggerSec *
+                            revealDurationMultiplier,
                     },
                 },
             }}

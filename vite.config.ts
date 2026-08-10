@@ -1,8 +1,8 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { cdnAdapter } from "@vinext/cloudflare/cache/cdn-adapter";
-import { defineConfig } from "vite";
 import vinext from "vinext";
+import { defineConfig } from "vite";
 
 export default defineConfig({
     // react-notion-x が依存する CJS パッケージ (react-image など) の

@@ -12,7 +12,7 @@ import {
     ProfileDescription,
 } from "./profile-description";
 
-const GREETING_DURATION_SEC = 1;
+const GREETING_DURATION_SEC = 2;
 
 export const GREETING_SEQUENCE_DURATION_SEC =
     GREETING_MESSAGE_DURATION_SEC + PROFILE_DESCRIPTION_DURATION_SEC;
@@ -38,7 +38,7 @@ export const GreetingText = () => {
 
     return (
         <motion.div
-            className="mt-8 flex flex-col gap-2 text-2xl text-white"
+            className="mt-8 flex flex-col gap-2 text-xl text-white"
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
