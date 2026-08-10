@@ -2,13 +2,7 @@ import type { Metadata } from "next";
 import type React from "react";
 import "./globals.css";
 
-import {
-    JetBrains_Mono,
-    Montserrat,
-    Montserrat_Alternates,
-    Noto_Sans_JP,
-    Poppins,
-} from "next/font/google";
+import { JetBrains_Mono, Noto_Sans_JP, Poppins } from "next/font/google";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { cn } from "@/lib/utils";
 
@@ -26,18 +20,6 @@ const poppins = Poppins({
 const jetbrainsMono = JetBrains_Mono({
     subsets: ["latin"],
     variable: "--font-jetbrains-mono",
-    weight: ["400", "500", "600", "700"],
-});
-
-const montserrat = Montserrat({
-    subsets: ["latin"],
-    variable: "--font-montserrat",
-    weight: ["400", "500", "600", "700"],
-});
-
-const montserratAlternates = Montserrat_Alternates({
-    subsets: ["latin"],
-    variable: "--font-montserrat-alternates",
     weight: ["400", "500", "600", "700"],
 });
 
@@ -76,8 +58,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
                     poppins.variable,
                     notoSansJP.variable,
                     jetbrainsMono.variable,
-                    montserrat.variable,
-                    montserratAlternates.variable,
                 )}
             >
                 <ThemeProvider

@@ -28,7 +28,7 @@ const DesktopHeader = () => (
 );
 
 const MobileHeader = () => (
-    <header className="mx-auto flex max-w-[1440px] items-center justify-between p-6">
+    <header className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-6">
         <Link
             href="/"
             className="w-fit text-xl font-medium tracking-tight text-gray-900"

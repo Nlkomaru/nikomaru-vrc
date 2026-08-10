@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTableUrl } from "@/lib/table-url";
+import { fetchTable } from "@/lib/table-url";
 import type { PostMeta } from "../_component/types";
 import { redirectMap } from "./redirect";
 
@@ -15,11 +15,8 @@ export async function generateMetadata({
 }: {
     params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-    // ローカル開発時だけ .dev.vars を使い、デプロイ済み Worker は Secrets Store を必ず参照する。
-    const tableUrl = await getTableUrl();
-
     const { slug } = await params;
-    const res0 = await fetch(`${tableUrl}`);
+    const res0 = await fetchTable();
     const data = await res0.json<PostMeta[]>();
     const redirect = redirectMap.find((redirect) => redirect.from === slug);
 

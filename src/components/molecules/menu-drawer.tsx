@@ -44,7 +44,7 @@ export function MenuDrawer({ className }: React.ComponentProps<"div">) {
                         <Dialog.Close asChild>
                             <button
                                 type="button"
-                                className="absolute top-6 right-6"
+                                className="absolute top-6 right-4"
                             >
                                 <XIcon className="size-8 text-gray-600" />
                             </button>

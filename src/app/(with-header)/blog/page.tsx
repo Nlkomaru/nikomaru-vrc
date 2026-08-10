@@ -1,14 +1,11 @@
-import { getTableUrl } from "@/lib/table-url";
+import { fetchTable } from "@/lib/table-url";
 import { PostCard } from "./_component/post-card";
 import type { PostMeta } from "./_component/types";
 
 // Blog metadata is fetched through a Worker binding and cannot be prerendered.
 export const dynamic = "force-dynamic";
 export default async function BlogIndexPage() {
-    // ローカル開発時だけ .dev.vars を使い、デプロイ済み Worker は Secrets Store を必ず参照する。
-    const tableUrl = await getTableUrl();
-
-    const res = await fetch(`${tableUrl}`);
+    const res = await fetchTable();
     let json = await res.json<PostMeta[]>();
     json.sort(
         (a, b) =>

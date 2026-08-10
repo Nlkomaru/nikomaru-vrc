@@ -17,11 +17,16 @@ export default async function Page({
         return redirectTo(redirect.to);
     }
     const notion = new NotionAPI();
-    let recordMap;
+    let recordMap: ReturnType<typeof normalizeRecordMap>;
     try {
         recordMap = normalizeRecordMap(await notion.getPage(slug));
     } catch (e) {
-        console.error("DEBUG_NOTION_ERROR", e instanceof Error ? `${e.name}: ${e.message}\n${e.stack}` : String(e));
+        console.error(
+            "DEBUG_NOTION_ERROR",
+            e instanceof Error
+                ? `${e.name}: ${e.message}\n${e.stack}`
+                : String(e),
+        );
         throw e;
     }
 

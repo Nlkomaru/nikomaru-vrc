@@ -14,3 +14,13 @@ export async function getTableUrl(): Promise<string> {
 
     return env.TABLE_URL.get();
 }
+
+/**
+ * Fetches the Notion table endpoint. TABLE_URL must point at the custom domain
+ * (notion-api.nikomaru.dev), not the workers.dev host: a fetch from a preview
+ * URL (workers.dev) to another workers.dev Worker fails with Cloudflare error
+ * 1042.
+ */
+export async function fetchTable(): Promise<Response> {
+    return fetch(await getTableUrl());
+}

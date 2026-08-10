@@ -10,7 +10,7 @@ type ProfileDescriptionProps = {
 
 export const ProfileDescription = ({ delaySec }: ProfileDescriptionProps) => (
     <motion.p
-        className="text-lg font-normal"
+        className="text-base font-normal"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
