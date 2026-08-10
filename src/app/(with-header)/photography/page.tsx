@@ -11,7 +11,7 @@ export default async function PhotographyPage() {
     }));
 
     return (
-        <section className="py-12">
+        <section>
             {galleryPhotos.length > 0 ? (
                 <PhotoGallery photos={galleryPhotos} />
             ) : (
