@@ -5,6 +5,13 @@ import { usePathname } from "next/navigation";
 
 const NAVIGATION_LINKS = ["photography", "blog", "about"] as const;
 
+// 表示名だけを短くする。遷移先は /photography のまま。
+const NAVIGATION_LABELS: Record<(typeof NAVIGATION_LINKS)[number], string> = {
+    photography: "PHOTO",
+    blog: "BLOG",
+    about: "ABOUT",
+};
+
 export const HeaderNavigation = () => {
     const pathname = usePathname();
 
@@ -23,7 +30,7 @@ export const HeaderNavigation = () => {
                         href={`/${link}`}
                         className="relative block pb-1 transition-colors hover:text-gray-900"
                     >
-                        {link.toUpperCase()}
+                        {NAVIGATION_LABELS[link]}
                         {isActive ? (
                             <span className="absolute inset-x-0 bottom-0 h-0.5 rounded-sm bg-current" />
                         ) : null}

@@ -8,7 +8,7 @@ import { useState } from "react";
 // ナビゲーションアイテムの定義
 const NAVIGATION_ITEMS = [
     {
-        name: "Photography",
+        name: "Photo",
         label: "写真作品",
         url: "/photography",
     },

@@ -19,7 +19,7 @@ type GreetingMessageProps = {
 export const GreetingMessage = ({ greeting }: GreetingMessageProps) => (
     <h1
         aria-label={`${greeting}、${NAME_TEXT}`}
-        className="ml-[-4px] flex flex-wrap text-3xl font-medium sm:flex-nowrap"
+        className="ml-[-4px] flex flex-col items-start text-3xl font-medium sm:flex-row"
     >
         <AnimatedText text={`${greeting}、`} />
         <AnimatedText
