@@ -101,7 +101,9 @@ export function PhotoGallery({ photos }: PhotoGalleryProps) {
                     <Dialog.Overlay className="fixed inset-0 z-50 bg-black/72 backdrop-blur-sm" />
                     <Dialog.Content
                         className="fixed inset-0 z-50 flex items-center justify-center focus:outline-none"
-                        onPointerDown={() => {
+                        // Closing on pointerdown lets the synthesized touch click
+                        // land on the gallery button underneath and reopen it.
+                        onClick={() => {
                             setSelectedPhoto(null);
                         }}
                     >

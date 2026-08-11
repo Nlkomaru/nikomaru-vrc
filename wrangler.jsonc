@@ -19,6 +19,9 @@
     "observability": {
         "enabled": true
     },
+    // PR ごとの `wrangler versions upload`(.github/workflows/preview.yml)が返す
+    // <version>-nikomaru-vrc.<subdomain>.workers.dev を実際に配信させる
+    "preview_urls": true,
     // ISR / ページキャッシュのバックエンドとして Workers Cache を利用する
     "cache": {
         "enabled": true
