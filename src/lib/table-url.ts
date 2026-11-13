@@ -5,7 +5,7 @@ import { env } from "cloudflare:workers";
  * to override the Worker Secret Store binding in deployed versions.
  */
 export async function getTableUrl(): Promise<string> {
-    if (process.env.NEXTJS_ENV === "development") {
+    if (import.meta.env.DEV) {
         const localTableUrl = process.env.TABLE_URL;
         if (localTableUrl) {
             return localTableUrl;

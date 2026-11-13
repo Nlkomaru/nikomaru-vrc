@@ -1,7 +1,5 @@
-"use client";
-
 import { faker } from "@faker-js/faker";
-import { usePathname } from "next/navigation";
+import { useRouterState } from "@tanstack/react-router";
 import { useMemo } from "react";
 
 // PastelBlobs renders multiple softly animated, pastel-colored blobs.
@@ -10,7 +8,10 @@ import { useMemo } from "react";
 // Uses fixed positioning to stay in viewport regardless of page height.
 export const PastelBlobs = () => {
     // Get pathname to derive a deterministic random seed per path
-    const pathname = usePathname().split("/")[1] ?? "/";
+    const rawPathname = useRouterState({
+        select: (state) => state.location.pathname,
+    });
+    const pathname = rawPathname.split("/")[1] ?? "/";
 
     // Build blob specs using faker's deterministic randomness per path
     const blobs = useMemo(() => {

@@ -5,6 +5,7 @@
 This is a website to showcase something related to VRChat.
 
 ## Main Tech Stack
+
 - Framework: Next.js 15 (with Opennext)
 - Language: TypeScript
 - Package Manager: pnpm
@@ -30,7 +31,9 @@ To the extent possible under law, Nikomaru has waived all copyright and related 
 You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see [About CC0](http://creativecommons.org/publicdomain/zero/1.0/).
 
 ## Special Thanks
+
 Using test model from [KhronosGroup/glTF-Sample-Models](https://github.com/KhronosGroup/glTF-Sample-Models) repository.
+
 - [WaterBottle](https://github.com/KhronosGroup/glTF-Sample-Models/tree/main/2.0/WaterBottle)
 - [ToyCar](https://github.com/KhronosGroup/glTF-Sample-Models/tree/main/2.0/ToyCar)
 

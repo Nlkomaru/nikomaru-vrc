@@ -17,8 +17,8 @@ declare global {
     };
 
     type RouteContext<
-        Route extends
-            VinextRouteTypes.RouteHandlerRoute = VinextRouteTypes.RouteHandlerRoute,
+        Route extends VinextRouteTypes.RouteHandlerRoute =
+            VinextRouteTypes.RouteHandlerRoute,
     > = {
         params: Promise<VinextRouteTypes.ParamMap[Route]>;
     };

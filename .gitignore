@@ -31,8 +31,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# vinext / vite
+# cloudflare / tanstack / vite
 /dist/
+.cloudflare/
+.tanstack/
+.output/
+.nitro/
 .vinext/
 .wrangler/
 

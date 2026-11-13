@@ -1,79 +1,80 @@
 name: Preview
 
 on:
-  pull_request:
-    types: [ opened, synchronize ]
+    pull_request:
+        types: [opened, synchronize]
 
 permissions:
-  contents: write
-  pull-requests: write
-  id-token: write
+    contents: read
+    pull-requests: write
+    id-token: write
+
+env:
+    CF_SEND_TELEMETRY: "false"
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [22]
-    timeout-minutes: 10
-    name: Deploy
-    steps:
-      - uses: actions/checkout@v4
+    deploy:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        name: Deploy
+        steps:
+            - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
+            - uses: voidzero-dev/setup-vp@v1.22.0
+              with:
+                  node-version-file: .node-version
+                  cache: true
+                  run-install: |
+                      args: ["--frozen-lockfile"]
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
+            - name: Check
+              run: pnpm run check
 
-        # Node.jsのインストール
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache-dependency-path: ./pnpm-lock.yaml
-          cache: 'pnpm'
+            - name: Typecheck
+              run: pnpm run typecheck
 
-      - name: Install
-        run: pnpm install
+            - name: Build pages
+              run: pnpm run build
 
-      - name: Build pages
-        run: pnpm run build
+            - name: Load Preview Secrets
+              uses: nlkomaru/secret-manager@v2
+              with:
+                  project: "nikomaru-vrc"
+                  env: "preview"
+                  aws-role-arn: ${{ secrets.AWS_ROLE_ARN }}
+                  shared-keys: |
+                      CLOUDFLARE_ACCOUNT_ID
 
-      - name: Load Preview Secrets
-        uses: nlkomaru/secret-manager@main
-        with:
-          project: "nikomaru-vrc"
-          env: "preview"
-          aws-role-arn: ${{ secrets.AWS_ROLE_ARN }}
+            - name: Deploy pages preview
+              id: deploy-pages-preview
+              env:
+                  CLOUDFLARE_API_TOKEN: ${{ env.CLOUDFLARE_API_TOKEN || env.CLOUDFLARE_API_KEY }}
+                  CLOUDFLARE_ACCOUNT_ID: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
+              run: |
+                  pnpm exec cf workers versions create --prebuilt --message "Deployed pages by GitHub Actions branch ${{ github.ref_name }}" 2>&1 | tee cf-preview.log
+                  url=$(grep -Eo 'https://[^[:space:]]+' cf-preview.log | head -n 1 || true)
+                  if [ -z "$url" ]; then
+                    echo "Failed to resolve preview URL from cf outputs."
+                    exit 1
+                  fi
+                  echo "deployment_url=$url" >> "$GITHUB_OUTPUT"
 
-      - name: Deploy pages preview
-        id: deploy-pages-preview
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ env.CLOUDFLARE_API_TOKEN || env.CLOUDFLARE_API_KEY }}
-          accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
-          command: versions upload --config dist/server/wrangler.json --message "Deployed pages by GitHub Actions branch ${{ github.ref_name }}"
-          
-      - name: Create comment file
-        id: create-comment-file
-        env:
-          DEPLOYMENT_URL: ${{ steps.deploy-pages-preview.outputs.deployment-url }}
-        run: |
-          cat  << EOF > comment.md
-          ## 🚀 Deploying ${{ github.event.repository.name }} with Cloudflare Workers
-          <table>
-            <tr>
-              <th scope="row">Preview URL</th>
-              <td><a href="$DEPLOYMENT_URL">$DEPLOYMENT_URL</a></td>
-            </tr>
-          </table>
-          EOF
+            - name: Create comment file
+              id: create-comment-file
+              env:
+                  DEPLOYMENT_URL: ${{ steps.deploy-pages-preview.outputs.deployment_url }}
+              run: |
+                  cat << EOF > comment.md
+                  ## 🚀 Deploying ${{ github.event.repository.name }} with Cloudflare Workers
+                  <table>
+                    <tr>
+                      <th scope="row">Preview URL</th>
+                      <td><a href="$DEPLOYMENT_URL">$DEPLOYMENT_URL</a></td>
+                    </tr>
+                  </table>
+                  EOF
 
-      - name: Create PR comment
-        run: gh pr comment ${{ github.event.number }} --body-file comment.md
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Create PR comment
+              run: gh pr comment ${{ github.event.number }} --body-file comment.md
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
