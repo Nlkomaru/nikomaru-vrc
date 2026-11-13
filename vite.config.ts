@@ -1,8 +1,21 @@
+import { fileURLToPath, URL } from "node:url";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
-import { cdnAdapter } from "@vinext/cloudflare/cache/cdn-adapter";
-import vinext from "vinext";
-import { defineConfig } from "vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import viteReact from "@vitejs/plugin-react";
+import { defineConfig } from "vite-plus";
+
+const ignorePatterns = [
+    "**/src/routeTree.gen.ts",
+    "**/.cloudflare/**",
+    "**/.tanstack/**",
+    "**/dist/**",
+    "**/node_modules/**",
+    "**/public/**",
+    "**/src/components/ui/**",
+    "**/cloudflare-env.d.ts",
+    "**/worker-configuration.d.ts",
+];
 
 export default defineConfig({
     // react-notion-x が依存する CJS パッケージ (react-image など) の
@@ -10,20 +23,28 @@ export default defineConfig({
     legacy: {
         inconsistentCjsInterop: true,
     },
+    resolve: {
+        tsconfigPaths: true,
+        alias: {
+            "^": fileURLToPath(new URL("./public", import.meta.url)),
+        },
+    },
     plugins: [
-        // Tailwind CSS v4 は PostCSS 経由ではなく Vite プラグインとして読み込む
+        cloudflare({ viteEnvironment: { name: "ssr" } }),
         tailwindcss(),
-        // vinext auto-injects @mdx-js/rollup with plugins from next.config
-        vinext({
-            // ISR / ページキャッシュを Workers Cache (wrangler.jsonc の cache.enabled) に載せる
-            cache: { cdn: cdnAdapter() },
+        tanstackStart({
+            srcDirectory: "src",
         }),
-        cloudflare({
-            // Worker のエントリは RSC 環境で動き、SSR をその子環境として持つ
-            viteEnvironment: {
-                name: "rsc",
-                childEnvironments: ["ssr"],
-            },
-        }),
+        viteReact(),
     ],
+    fmt: {
+        useTabs: false,
+        tabWidth: 4,
+        printWidth: 80,
+        singleQuote: false,
+        ignorePatterns,
+    },
+    lint: {
+        ignorePatterns,
+    },
 });

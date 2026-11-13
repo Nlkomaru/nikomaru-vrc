@@ -1,73 +1,55 @@
 name: Deploy
 
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-      - master
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+            - master
 
 permissions:
-  contents: write
+    contents: read
+    id-token: write
+
+env:
+    CF_SEND_TELEMETRY: "false"
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [22]
-    timeout-minutes: 10
-    name: Deploy
-    steps:
-      - uses: actions/checkout@v4
+    deploy:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        name: Deploy
+        steps:
+            - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
+            - uses: voidzero-dev/setup-vp@v1.22.0
+              with:
+                  node-version-file: .node-version
+                  cache: true
+                  run-install: |
+                      args: ["--frozen-lockfile"]
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
+            - name: Check
+              run: pnpm run check
 
-        # Node.jsのインストール
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache-dependency-path: ./pnpm-lock.yaml
-          cache: 'pnpm'
+            - name: Typecheck
+              run: pnpm run typecheck
 
-      - name: Install
-        run: pnpm install
+            - name: Build pages
+              run: pnpm run build
 
-      - name: Build pages
-        run: pnpm run build
+            - name: Load Production Secrets
+              uses: nlkomaru/secret-manager@v2
+              with:
+                  project: "nikomaru-vrc"
+                  env: "production"
+                  aws-role-arn: ${{ secrets.AWS_ROLE_ARN }}
+                  shared-keys: |
+                      CLOUDFLARE_ACCOUNT_ID
 
-      # CLOUDFLARE_API_KEY / CLOUDFLARE_ACCOUNT_ID は BSM(nikomaru プロジェクト)管理に移行済み。
-      # bitwarden/sm-action@v2 はジョブ内 env にしか値を出さず(steps.*.outputs を持たない)、
-      # 次の wrangler-action は with: (式コンテキスト)でしか値を受け取れないため、
-      # 一度 GITHUB_OUTPUT に書き出して式コンテキストから参照できるようにする。
-      # sm-action がマスク登録済みの値なので、ログに出しても伏せ字になる。
-      - name: Get secrets from Bitwarden Secrets Manager
-        uses: bitwarden/sm-action@v2
-        with:
-          access_token: ${{ secrets.NIKOMARU_BITWARDEN_SECRET_MANAGER_ACCESS_TOKEN }}
-          secrets: |
-            f1bf4fa4-0288-4a31-b28b-b499013acdce > CLOUDFLARE_API_KEY
-            2bad9e23-82af-4fba-b514-b49900e1632f > CLOUDFLARE_ACCOUNT_ID
-
-      - name: Expose Bitwarden secrets as step outputs
-        id: bws
-        run: |
-          echo "cloudflare_api_key=$CLOUDFLARE_API_KEY" >> "$GITHUB_OUTPUT"
-          echo "cloudflare_account_id=$CLOUDFLARE_ACCOUNT_ID" >> "$GITHUB_OUTPUT"
-
-      - name: Deploy pages
-        id: deploy-pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ steps.bws.outputs.cloudflare_api_key }}
-          accountId: ${{ steps.bws.outputs.cloudflare_account_id }}
-          # vinext build が生成する設定でデプロイする(ルートの wrangler.jsonc は開発用)
-          command: deploy --config dist/server/wrangler.json
+            - name: Deploy pages
+              id: deploy-pages
+              env:
+                  CLOUDFLARE_API_TOKEN: ${{ env.CLOUDFLARE_API_TOKEN || env.CLOUDFLARE_API_KEY }}
+                  CLOUDFLARE_ACCOUNT_ID: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
+              run: pnpm exec cf deploy --prebuilt

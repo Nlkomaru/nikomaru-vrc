@@ -1,5 +1,5 @@
+import { Link } from "@tanstack/react-router";
 import { Github, MessageSquareMore, Twitter } from "lucide-react";
-import Link from "next/link";
 
 export const Footer = () => (
     <footer className="w-full bg-[oklch(0.88_0.00_67.80/0.1)] backdrop-blur-xl">
@@ -8,7 +8,7 @@ export const Footer = () => (
                 {/* ロゴと説明 */}
                 <div className="flex flex-col gap-3 items-center md:items-start">
                     <Link
-                        href="/"
+                        to="/"
                         className="text-xl font-medium tracking-tight text-gray-900"
                     >
                         Nikomaru VRChat
