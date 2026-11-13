@@ -56,7 +56,7 @@ jobs:
         id: deploy-pages
         uses: cloudflare/wrangler-action@v3
         with:
-          apiToken: ${{ env.CLOUDFLARE_API_KEY }}
+          apiToken: ${{ env.CLOUDFLARE_API_TOKEN || env.CLOUDFLARE_API_KEY }}
           accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
           # vinext build が生成する設定でデプロイする(ルートの wrangler.jsonc は開発用)
           command: deploy --config dist/server/wrangler.json

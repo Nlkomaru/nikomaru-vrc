@@ -54,7 +54,7 @@ jobs:
         id: deploy-pages-preview
         uses: cloudflare/wrangler-action@v3
         with:
-          apiToken: ${{ env.CLOUDFLARE_API_KEY }}
+          apiToken: ${{ env.CLOUDFLARE_API_TOKEN || env.CLOUDFLARE_API_KEY }}
           accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
           command: versions upload --config dist/server/wrangler.json --message "Deployed pages by GitHub Actions branch ${{ github.ref_name }}"
           
