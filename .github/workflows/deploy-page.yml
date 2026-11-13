@@ -52,4 +52,8 @@ jobs:
               env:
                   CLOUDFLARE_API_TOKEN: ${{ env.CLOUDFLARE_API_TOKEN || env.CLOUDFLARE_API_KEY }}
                   CLOUDFLARE_ACCOUNT_ID: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
-              run: pnpm exec cf deploy --prebuilt
+              run: |
+                  secrets_file="$(mktemp)"
+                  trap 'rm -f "$secrets_file"' EXIT
+                  printf 'TABLE_URL=%s\n' "${TABLE_URL}" > "$secrets_file"
+                  pnpm exec cf deploy --prebuilt --secrets-file "$secrets_file"
