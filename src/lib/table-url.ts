@@ -12,7 +12,7 @@ export async function getTableUrl(): Promise<string> {
         }
     }
 
-    return env.TABLE_URL.get();
+    return env.TABLE_URL;
 }
 
 /**
